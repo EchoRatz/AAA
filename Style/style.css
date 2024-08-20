@@ -1,0 +1,35 @@
+body{
+    
+    background-image: url(source/BG.jpg);
+    background-size: 100%;
+}
+
+body{
+    background-image: url(source/BG.jpg);
+}
+
+.container{
+    width: 700px;
+    height: 400px;
+    margin: 250px auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass{
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.playButton{
+    height: 100px;
+    width: 200px;
+    font-size: 30px;
+}
+

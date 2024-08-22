@@ -10,7 +10,7 @@ body{
     max-width: 400px;
     margin: 100px auto;
     position: fixed;
-    top: 440px;
+    bottom: -50px;
     left: 40%;
 }
 

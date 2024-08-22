@@ -9,6 +9,9 @@ body{
     grid-gap: 10px;
     max-width: 400px;
     margin: 100px auto;
+    position: fixed;
+    top: 440px;
+    left: 40%;
 }
 
 .wordle-row {

@@ -3,7 +3,7 @@ import { testDictionary, realDictionary } from './dictionary.js';
 // for testing purposes, make sure to use the test dictionary
 console.log('test dictionary:', testDictionary);
 
-const wordAnswer = testDictionary[Math.floor(Math.random() * testDictionary.length)];
+let wordAnswer = testDictionary[Math.floor(Math.random() * testDictionary.length)];
 
 console.log(`Word: ${wordAnswer}`);
 
@@ -47,11 +47,41 @@ function checkGuess() {
     }
 
     if (guessedWord === wordAnswer) {
-        alert("Congratulations! You've guessed the word!");
+
+        for (let i = 0; i < 5; i++) {
+            row.children[i].style.backgroundColor = '#538d4e';
+        }
+        
+        // Use setTimeout to ensure the background color change is visible before the alert
+        setTimeout(() => {
+            alert("Congratulations! You've guessed the word!");
+            resetGame();
+        }, 100);  // Delay to ensure the color change is rendered
+        
     } else if (currentRow < 5) {
         currentRow++;
         currentCol = 0;
     } else {
         alert("Game Over! The word was: " + wordAnswer);
+        resetGame();
     }
+}
+
+function resetGame() {
+     // Clear the grid
+     for (let i = 0; i < grid.children.length; i++) {
+        const row = grid.children[i];
+        for (let j = 0; j < row.children.length; j++) {
+            row.children[j].textContent = '';
+            row.children[j].style.backgroundColor = '';
+        }
+    }
+
+    // Reset the row and column counters
+    currentRow = 0;
+    currentCol = 0;
+
+    // Select a new word
+    wordAnswer = testDictionary[Math.floor(Math.random() * testDictionary.length)];
+    console.log(`New Word: ${wordAnswer}`);
 }

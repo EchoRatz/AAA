@@ -3,7 +3,7 @@ import { testDictionary, realDictionary } from './dictionary.js';
 // for testing purposes, make sure to use the test dictionary
 console.log('test dictionary:', testDictionary);
 
-let wordAnswer = testDictionary[Math.floor(Math.random() * testDictionary.length)];
+let wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
 
 console.log(`Word: ${wordAnswer}`);
 
@@ -82,6 +82,6 @@ function resetGame() {
     currentCol = 0;
 
     // Select a new word
-    wordAnswer = testDictionary[Math.floor(Math.random() * testDictionary.length)];
+    wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
     console.log(`New Word: ${wordAnswer}`);
 }

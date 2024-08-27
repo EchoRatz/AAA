@@ -1,6 +1,6 @@
-export const testDictionary = ['earth', 'plane', 'crane', 'audio', 'house', 'offer', 'often'];
+const testDictionary = ['earth', 'plane', 'crane', 'audio', 'house', 'offer', 'often'];
 
-export const realDictionary = [
+const realDictionary = [
   "aback",
   "abase",
   "abate",

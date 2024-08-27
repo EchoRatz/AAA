@@ -2,7 +2,6 @@ body{
     background-color: rgb(0, 0, 0, 0.9);
 }
 
-
 .wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);

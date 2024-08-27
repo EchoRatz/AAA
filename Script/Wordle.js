@@ -1,9 +1,15 @@
-//import { testDictionary, realDictionary } from './dictionary.js';
+let score = JSON.parse(localStorage.getItem('score')) || {
+    wins: 0,
+    losses: 0
+}
+
+testShowScore();
 
 // for testing purposes, make sure to use the test dictionary
 console.log('test dictionary:', testDictionary);
 
 let wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
+
 
 console.log(`Word: ${wordAnswer}`);
 
@@ -55,16 +61,24 @@ function checkGuess() {
         // Use setTimeout to ensure the background color change is visible before the alert
         setTimeout(() => {
             alert("Congratulations! You've guessed the word!");
+            score.wins += 1;
+            localStorage.setItem('score', JSON.stringify(score));
+            testShowScore();
             resetGame();
-        }, 100);  // Delay to ensure the color change is rendered
+        }, 300);  // Delay to ensure the color change is rendered
         
     } else if (currentRow < 5) {
         currentRow++;
         currentCol = 0;
     } else {
         alert("Game Over! The word was: " + wordAnswer);
+        score.losses += 1;
+        localStorage.setItem('score', JSON.stringify(score));
+        testShowScore();
         resetGame();
     }
+
+    
 }
 
 function resetGame() {
@@ -85,3 +99,16 @@ function resetGame() {
     wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
     console.log(`New Word: ${wordAnswer}`);
 }
+
+function testShowScore(){
+    console.log(`Wins: ${score.wins}, Losses: ${score.losses}`);
+}
+
+document.querySelector('.js-resetScore')
+    .addEventListener('click', () => {
+        score.wins = 0;
+        score.losses = 0;
+        localStorage.removeItem('score');
+        testShowScore();
+    }
+)

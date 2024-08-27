@@ -1,7 +1,7 @@
 // levels.js
 const level1 = {
     levelNumber: 1,
-    background: "forest",
+    background: "Style/source/Background.png",
     enemies: [
         {
             type: "Vader",

@@ -124,7 +124,21 @@ function loadEnemyImage(level) {
     }
 }
 
+// Function to load background image
+function loadBackgroundImage(level) {
+    const upperSection = document.querySelector('.upper-section');
+    if (upperSection && level.background) {
+        upperSection.style.backgroundImage = `url(${level.background})`;
+        upperSection.style.backgroundSize = 'cover';
+        upperSection.style.backgroundPosition = 'center';
+        upperSection.style.backgroundRepeat = 'no-repeat';
+    } else {
+        console.error("No background image found or element missing.");
+    }
+}
+
 // Load the first level's enemy image
 loadEnemyImage(level1);
+loadBackgroundImage(level1);
 
 

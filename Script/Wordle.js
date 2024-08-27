@@ -1,6 +1,6 @@
 let score = JSON.parse(localStorage.getItem('score')) || {
     wins: 0,
-    losses: 0
+    lives: 3
 }
 
 testShowScore();
@@ -72,7 +72,7 @@ function checkGuess() {
         currentCol = 0;
     } else {
         alert("Game Over! The word was: " + wordAnswer);
-        score.losses += 1;
+        score.lives -= 1;
         localStorage.setItem('score', JSON.stringify(score));
         testShowScore();
         resetGame();
@@ -107,8 +107,24 @@ function testShowScore(){
 document.querySelector('.js-resetScore')
     .addEventListener('click', () => {
         score.wins = 0;
-        score.losses = 0;
+        score.lives = 3;
         localStorage.removeItem('score');
         testShowScore();
     }
 )
+
+
+// Function to load enemy image
+function loadEnemyImage(level) {
+    const enemyImage = document.querySelector('.js-enemy-image');
+    if (enemyImage && level.enemies.length > 0) {
+        enemyImage.src = level.enemies[0].image; // Load the image of the first enemy in the array
+    } else {
+        console.error("No enemy image found or image element missing.");
+    }
+}
+
+// Load the first level's enemy image
+loadEnemyImage(level1);
+
+

@@ -11,18 +11,11 @@ let currentProgress = JSON.parse(sessionStorage.getItem('currentProgress')) || {
     currentEnemyHealth: 100
 };
 
-let gameSaveProgress = JSON.parse(sessionStorage.getItem('saveProgress')) || {
-    currentLevel: 1,
-    currentEnemy: 1,
-    remainingLives: 3,
-    currentEnemyHealth: 100
-};
-
 let achievement = JSON.parse(localStorage.getItem('achievement')) || {
     wins: 0,
 };
 
- //Check if there's saved progress in sessionStorage
+// Check if there's saved progress in sessionStorage
 if (sessionStorage.getItem('currentProgress')) {
     currentProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
 } else {
@@ -32,7 +25,7 @@ if (sessionStorage.getItem('currentProgress')) {
 testShowstat();
 
 let wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
-console.log(`Anser: ${wordAnswer}`);
+console.log(`Word : ${wordAnswer}`);
 let currentRow = 0;
 let currentCol = 0;
 const grid = document.querySelector('.wordle-grid');
@@ -89,7 +82,6 @@ function checkGuess() {
 
     if (guessedWord === wordAnswer) {
         currentProgress.currentEnemyHealth -= stat.attackDmg;
-        console.log(`EnemyCurrentHealth: ${currentProgress.currentEnemyHealth}`);
 
         if (currentProgress.currentEnemyHealth <= 0) {
             currentProgress.currentEnemy++;
@@ -148,12 +140,36 @@ function saveProgress() {
 function saveProgressToLocalStorage() {
     const progress = JSON.parse(sessionStorage.getItem('currentProgress'));
     if (progress) {
-        localStorage.setItem('gameSaveProgress', JSON.stringify(progress));
+        localStorage.setItem('saveProgress', JSON.stringify(progress));
         console.log('Progress saved to localStorage:', progress);
     } else {
         console.log('No progress found in sessionStorage to save.');
     }
 }
+
+// Add an event listener to the "Save" button
+document.getElementById('saveGame').addEventListener('click', () => {
+    saveProgressToLocalStorage(); // Save the current progress to localStorage
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if there's saved progress in localStorage
+    const savedProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
+
+    if (savedProgress) {
+        currentProgress = savedProgress;
+        console.log('Loaded progress from sessionStorage:', currentProgress);
+    } else {
+        resetCurrentProgress(); // Start fresh if no saved progress exists
+        console.log('Starting new game with fresh progress.');
+    }
+
+    // Continue with the existing logic to load the level and start the game
+    loadLevelContent(); 
+    updateHearts();
+    sessionStorage.setItem('sessionSave', 'true');
+});
+
 
 window.addEventListener('beforeunload', () => {
     saveProgress();
@@ -176,7 +192,7 @@ function resetGame() {
     currentRow = 0;
     currentCol = 0;
     wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
-    console.log(`Anser: ${wordAnswer}`);
+    console.log(`Word : ${wordAnswer}`);
     loadLevelContent();
     updateHearts();
 }
@@ -267,36 +283,11 @@ document.getElementById('continueGame').addEventListener('click', function() {
     togglePauseModal();
 });
 
-document.getElementById('returnToMenu').addEventListener('click', () => {
+document.getElementById('returnToMenu').addEventListener('click', function() {
     sessionStorage.removeItem('currentProgress');
     sessionStorage.removeItem('sessionSave');
-
-    sessionStorage.clear();
-    console.log(`session clear`);
     window.location.href = "index.html";
 });
-
-document.getElementById('saveGame').addEventListener('click', () => {
-    saveProgressToLocalStorage();
-});
-
-//new piece
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if there's saved progress in localStorage
-    const savedProgress = JSON.parse(localStorage.getItem('gameSaveProgress'));
-
-    if (savedProgress && normalStart === false) {
-        currentProgress = savedProgress;
-        sessionStorage.setItem('currentProgress', JSON.stringify(currentProgress));
-        console.log('Loaded saved progress from localStorage:', currentProgress);
-    }
-
-    // Continue with the existing logic to load the level and start the game
-    loadLevelContent(); 
-    updateHearts();
-    sessionStorage.setItem('sessionSave', 'true');
-});
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const row1 = document.getElementById('row1');
@@ -338,45 +329,4 @@ document.addEventListener('DOMContentLoaded', () => {
     createKeyboardRow(row1, row1Letters);
     createKeyboardRow(row2, row2Letters);
     createKeyboardRow(row3, row3Letters);
-  });
-
-// Timer settings
-let timeElapsed = 0; // Initial time in seconds
-let timerInterval; // Variable to store the timer interval
-
-// Function to start the count-up timer
-function startCountUpTimer() {
-  const timerDisplay = document.getElementById('timer');
-  
-  // Update the timer every second
-  timerInterval = setInterval(() => {
-    timeElapsed++; // Increase the elapsed time
-    const minutes = Math.floor(timeElapsed / 60); // Calculate minutes
-    const seconds = timeElapsed % 60; // Calculate remaining seconds
-
-    // Format the time to MM:SS
-    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-    // Update the timer display
-    timerDisplay.textContent = `Time Elapsed: ${formattedTime}`;
-  }, 1000); // Update every 1000 milliseconds (1 second)
-}
-
-// Optional function to stop the timer
-function stopTimer() {
-  clearInterval(timerInterval); // Stop the timer
-}
-
-// Optional function to reset the timer
-function resetTimer() {
-  timeElapsed = 0; // Reset elapsed time
-  document.getElementById('timer').textContent = 'Time Elapsed: 00:00'; // Reset timer display
-  stopTimer(); // Stop the existing timer if any
-  startCountUpTimer(); // Restart the timer
-}
-
-// Start the timer when the game starts
-document.addEventListener('DOMContentLoaded', () => {
-  startCountUpTimer(); // Call this function when the page loads
 });
-

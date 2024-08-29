@@ -1,4 +1,3 @@
-let normalStart = true;// Get the audio elements by their IDs
 const backgroundMusic = document.getElementById('MenuMusic');
 const clickSound = document.getElementById('ClickSound');
 
@@ -53,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle click event on the "Play Game" button
   startGameButton.addEventListener('click', (event) => {
     event.preventDefault();
-    normalStart = true; // Indicate a normal start
 
     clickSound.currentTime = 0;
     clickSound.play();
@@ -63,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Clear session storage to ensure a fresh start
     sessionStorage.clear();
+    localStorage.removeItem('gameSaveProgress');
 
     setTimeout(() => {
       window.location.href = 'Cutscene.html';
@@ -72,9 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle click event on the "Resume" button
   loadGameButton.addEventListener('click', (event) => {
     event.preventDefault();
-    normalStart = false; // Indicate that we are resuming from a saved game
 
-    // Check if there is saved progress in localStorage
+    // Check if there is saved progress
     const savedProgress = localStorage.getItem('gameSaveProgress');
     if (savedProgress) {
       clickSound.currentTime = 0;
@@ -90,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       alert("No saved game progress found.");
     }
+  });
   // Add event listeners to all buttons for click sound
   const buttons = document.querySelectorAll('button'); // Select all button elements
   buttons.forEach(button => {

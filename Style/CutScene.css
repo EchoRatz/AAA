@@ -68,8 +68,8 @@ body {
   
   #character-name {
     position: absolute; /* Position it within the container */
-    top: 30px; /* Adjust as necessary to position above the dialogue */
-    left: 29%; /* Center it horizontally */
+    top: 60px; /* Adjust as necessary to position above the dialogue */
+    left: 20%; /* Center it horizontally */
     transform: translateX(-50%); /* Center it */
     padding: 5px 10px;
     color: white; /* Text color */
@@ -95,3 +95,28 @@ body {
   .screen-vibrate {
     animation: vibrate 0.5s linear; /* Apply the shake animation */
   }  
+
+  #portrait {
+    width: 300px; /* Default width */
+    height: auto; /* Maintain aspect ratio */
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth transition */
+  }
+
+  /* Responsive styles */
+@media (max-width: 600px) {
+  #portrait {
+    width: 100px; /* Smaller width for smaller screens */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  #portrait {
+    width: 150px; /* Medium width for medium-sized screens */
+  }
+}
+
+@media (min-width: 1201px) {
+  #portrait {
+    width: 200px; /* Larger width for larger screens */
+  }
+}

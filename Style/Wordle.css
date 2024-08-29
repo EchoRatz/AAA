@@ -223,3 +223,13 @@ body, html {
     font-size: 20px;
     color: #666;
   }
+
+  /* Timer display styling */
+.timer {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff; /* Green color for a positive timer */
+    margin-top: 10px;
+    text-align: center;
+  }
+  

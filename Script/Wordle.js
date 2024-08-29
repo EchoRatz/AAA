@@ -298,4 +298,45 @@ document.addEventListener('DOMContentLoaded', () => {
     createKeyboardRow(row1, row1Letters);
     createKeyboardRow(row2, row2Letters);
     createKeyboardRow(row3, row3Letters);
+  });
+
+// Timer settings
+let timeElapsed = 0; // Initial time in seconds
+let timerInterval; // Variable to store the timer interval
+
+// Function to start the count-up timer
+function startCountUpTimer() {
+  const timerDisplay = document.getElementById('timer');
+  
+  // Update the timer every second
+  timerInterval = setInterval(() => {
+    timeElapsed++; // Increase the elapsed time
+    const minutes = Math.floor(timeElapsed / 60); // Calculate minutes
+    const seconds = timeElapsed % 60; // Calculate remaining seconds
+
+    // Format the time to MM:SS
+    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // Update the timer display
+    timerDisplay.textContent = `Time Elapsed: ${formattedTime}`;
+  }, 1000); // Update every 1000 milliseconds (1 second)
+}
+
+// Optional function to stop the timer
+function stopTimer() {
+  clearInterval(timerInterval); // Stop the timer
+}
+
+// Optional function to reset the timer
+function resetTimer() {
+  timeElapsed = 0; // Reset elapsed time
+  document.getElementById('timer').textContent = 'Time Elapsed: 00:00'; // Reset timer display
+  stopTimer(); // Stop the existing timer if any
+  startCountUpTimer(); // Restart the timer
+}
+
+// Start the timer when the game starts
+document.addEventListener('DOMContentLoaded', () => {
+  startCountUpTimer(); // Call this function when the page loads
 });
+

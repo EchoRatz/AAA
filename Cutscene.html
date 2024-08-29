@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dialogue System</title>
-  <link rel="stylesheet" href="/Style/CutScene.css">
+  <link rel="stylesheet" href="./Style/CutScene.css">
 
  <!-- Prefetch the next HTML page -->
   <link rel="prefetch" href="Wordle.html">
 
   <!-- Preload key assets for the next page -->
-  <link rel="preload" href="/Style/Wordle.css" as="style">
-  <link rel="preload" href="/Script/Wordle.js" as="script">
-  <link rel="preload" href="/Framework/css/bootstrap.min.css" as="style">
-  <link rel="preload" href="/Script/dictionary.js" as="script">
+  <link rel="preload" href="./Style/Wordle.css" as="style">
+  <link rel="preload" href="./Script/Wordle.js" as="script">
+  <link rel="preload" href="./Framework/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="./Script/dictionary.js" as="script">
 </head>
 <body>
     <div id="game-container">
@@ -21,12 +21,11 @@
     
         <!-- Dialogue Box -->
         <div id="dialogue-box">
-            <img id="portrait" src="/Style/source/CRIM.jpg" alt="Character Portrait">
+            <img id="portrait" src = "" alt="Character Portrait">
             <div id="character-name" class="character-name"></div>
           <div id="dialogue-content">
-            <!--<img id="dialogue-portrait" src="/Style/source/DialogueBox.jpeg" alt="Dialogue Character Portrait"> -->
             <div id="text-box">
-              <p id="text-content">This is a sample dialogue text to show in the cutscene box. It should be a bit longer than the one shown in the image.</p>
+              <p id="text-content"></p>
             </div>
           </div>
         </div>
@@ -34,6 +33,6 @@
     
       <audio id = "CutsceneMusic" src = "/audio/Cutscene.mp3" loop></audio>
 
-      <script src="/Script/CutScene.js"></script>
+      <script src="./Script/CutScene.js"></script>
 </body>
 </html>

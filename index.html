@@ -12,7 +12,7 @@
 
     <div class="container glass">
         <a href="Cutscene.html">
-            <button class="btn btn-outline-light playButton" id = "StartGameButton">Play Game</button>
+            <button class="btn btn-outline-light playButton" id = "ClickButton">Play Game</button>
         </a>
 
         <button class = "btn btn-outline-light LoadButton">Load</button>
@@ -21,7 +21,12 @@
         <div class="popup" id="popup">
             <button class="okButton button" onclick="closePopup()">OK</button>
         </div>
+
     </div>
+
+     <!-- Audio for Main Menu -->
+    <audio id = "MenuMusic" src = "/audio/Menu.mp3" loop></audio>
+    <audio id = "ClickSound" src = "/audio/ClickEffect.mp3"></audio>
 
     <script>
         let popup = document.getElementById("popup");

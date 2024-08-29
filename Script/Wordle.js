@@ -1,10 +1,17 @@
-let stat = JSON.parse(localStorage.getItem('stat')) || {
+const stat = JSON.parse(localStorage.getItem('stat')) || {
     wins: 0,
     lives: 3,
-    attackDmg: 20,
+    attackDmg: 50,
 }
 
 let currentProgress = JSON.parse(localStorage.getItem('currentProgress')) || {
+    currentLevel: 1,
+    currentEnemy: 1,
+    remainingLives: 3,
+    currentEnemyHealth: 100
+}
+
+let saveProgress = JSON.parse(localStorage.getItem('currentProgress')) || {
     currentLevel: 1,
     currentEnemy: 1,
     remainingLives: 3,
@@ -87,11 +94,32 @@ function checkGuess() {
             row.children[i].style.backgroundColor = '#538d4e';
         }
         
+        // Reduce the enemy's health by the player's attack damage
+        currentProgress.currentEnemyHealth -= stat.attackDmg;
+        console.log(`${stat.attackDmg}`);
+        console.log(`Enemy health is now: ${currentProgress.currentEnemyHealth}`);
+
+        if (currentProgress.currentEnemyHealth <= 0) {
+            // Move to the next enemy
+            currentProgress.currentEnemy++;
+            if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
+                // If no more enemies, move to the next level
+                currentProgress.currentLevel++;
+                currentProgress.currentEnemy = 1; // Reset to the first enemy in the new level
+            }
+
+            // Load the new enemy or level
+            loadLevelContent(); // Load the new background and enemy
+        }
+
+        // Save progress after each win
+        localStorage.setItem('currentProgress', JSON.stringify(currentProgress));
+
         // Use setTimeout to ensure the background color change is visible before the alert
         setTimeout(() => {
             alert("Congratulations! You've guessed the word!");
             achievement.wins += 1;
-            localStorage.setItem('stat', JSON.stringify(stat));
+            localStorage.setItem('achievement', JSON.stringify(achievement));
             testShowstat();
             resetGame();
         }, 300);  // Delay to ensure the color change is rendered
@@ -108,13 +136,29 @@ function checkGuess() {
         if (currentProgress.remainingLives > 0) {
             resetGame();
         } else {
-            localStorage.removeItem('savedGame'); // Clear the save if the player dies
+            // Game Over: Reset currentProgress to default values and restart the game
             alert("You've lost all lives. Progress is reset.");
+            resetCurrentProgress();
+            resetGame();
         }
     }
 
     
 }
+
+function resetCurrentProgress() {
+    currentProgress = {
+        currentLevel: 1,
+        currentEnemy: 1,
+        remainingLives: 3,
+        currentEnemyHealth: levels[0].enemies[0].health // Set to the health of the first enemy
+    };
+
+    localStorage.setItem('currentProgress', JSON.stringify(currentProgress));
+    updateHearts(); // Ensure hearts are updated after resetting progress
+
+}
+
 
 function resetGame() {
      // Clear the grid
@@ -133,10 +177,29 @@ function resetGame() {
     // Select a new word
     wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
     console.log(`New Word: ${wordAnswer}`);
+
+    // Reload the level content
+    loadLevelContent();
+    updateHearts();
 }
 
+/* for debugging and reset
+document.getElementById('resetStat').addEventListener('click', () => {
+    stat.wins = 0;
+    stat.lives = 3;
+    stat.attackDmg = 50; // Ensure it resets to 50, not 20
+    localStorage.setItem('stat', JSON.stringify(stat));
+    achievement.wins = 0;
+    localStorage.setItem('achievement', JSON.stringify(achievement));// Save the correct values
+    updateHearts();
+    testShowstat();
+    togglePauseModal(); // Hide the modal after resetting the stat
+});
+*/
+
+
 function testShowstat(){
-    console.log(`Wins: ${stat.wins}, Lives: ${stat.lives}`);
+    console.log(`Wins: ${achievement.wins}, Lives: ${currentProgress.remainingLives}`);
 }
 
 
@@ -178,6 +241,17 @@ function loadBackgroundImage() {
 function loadLevelContent() {
     loadBackgroundImage(); // Load the current level's background
     loadEnemyImage(); // Load the current enemy image
+
+    // Update the current enemy's health
+   // Update the current enemy's health only if it's not already set
+   if (currentProgress.currentEnemyHealth === undefined || currentProgress.currentEnemyHealth <= 0) {
+    const level = levels[currentProgress.currentLevel - 1];
+    if (level && level.enemies.length >= currentProgress.currentEnemy) {
+        const enemy = level.enemies[currentProgress.currentEnemy - 1];
+        currentProgress.currentEnemyHealth = enemy.health; // Set health to the current enemy's health
+        console.log(`Loaded enemy: ${enemy.type} with health: ${currentProgress.currentEnemyHealth}`);
+    }
+}
 }
 
 // Call this combined function on page load or after loading progress
@@ -218,33 +292,6 @@ document.getElementById('continueGame').addEventListener('click', function() {
 document.getElementById('returnToMenu').addEventListener('click', function() {
     window.location.href = "index.html"; // Redirect to the menu or lobby
 });
-
-// Event listener for "Reset stat" button
-document.getElementById('resetStat').addEventListener('click', () => {
-    stat.wins = 0;
-    stat.lives = 3;
-    stat.attackDmg = 20;
-    localStorage.removeItem('stat');
-    updateHearts();
-    testShowstat();
-    togglePauseModal(); // Hide the modal after resetting the stat
-});
-
-function saveGame() {
-    localStorage.setItem('savedGame', JSON.stringify({
-        lives: stat.lives,
-        wins: stat.wins,
-        currentLevel: currentLevel, // Assuming you have a currentLevel variable
-        wordAnswer: wordAnswer,     // Save the current word answer
-    }));
-    alert("Game progress saved!");
-}
-
-
-
-// Event listeners for save and load buttons
-document.getElementById('saveGame').addEventListener('click', saveGame);
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const row1 = document.getElementById('row1');

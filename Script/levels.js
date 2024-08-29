@@ -11,11 +11,13 @@ const level1 = {
         {
             type: "troll",
             health: 200,
+            image: "Style/source/Enemy/Troll.png"
             // Add image paths if needed
         },
         {
             type: "dragon",
             health: 500,
+            image: "Style/source/Enemy/Dragon.png"
             // Add image paths if needed
         }
     ],

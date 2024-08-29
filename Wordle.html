@@ -21,11 +21,11 @@
             <div class = "header">
 
                 <div class = "left-section">
-                    <a href="index.html">
-                        <button class = "btn btn-light returnButton">Return to lobby</button>
-                    </a>
         
-                    <button class = "btn btn-outline-light resetScoreButton js-resetScore">reset score</button>
+                    <div class = "heart-container js-heart-container">
+                        
+                    </div>
+
                 </div>
                 
                 <div class = "middle-section">
@@ -39,7 +39,7 @@
             </div>
 
             <div class = "main-character">
-
+                <img src = "Style/source/Yoda.png" alt = "main-character Image" class = "MC-image js-MC-image">
             </div>
 
             <div class = "Enemy">
@@ -102,6 +102,16 @@
                 </div>
             </div>
         </div>
+
+        <div id="pauseModal" class="modal">
+            <div class="modal-content">
+                <h2>Paused</h2>
+                <button id="continueGame" class="btn btn-primary">Continue</button>
+                <button id="returnToMenu" class="btn btn-light">Return to Menu</button>
+                <button id="resetScore" class="resetScoreButton btn btn-light">Reset Score</button>
+            </div>
+        </div>
+
     </div>
 
     <script src = "Script/dictionary.js"></script>

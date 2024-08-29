@@ -34,6 +34,23 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+function updateHearts() {
+    const heartContainer = document.querySelector('.js-heart-container');
+    heartContainer.innerHTML = ''; // Clear the container
+
+    for (let i = 0; i < score.lives; i++) {
+        const heart = document.createElement('img');
+        heart.src = 'Style/source/heart.png'; // Path to your heart image
+        heart.alt = 'Heart';
+        heartContainer.appendChild(heart);
+    }
+}
+
+// Call this function when the game initializes and whenever lives change
+document.addEventListener('DOMContentLoaded', () => {
+    updateHearts();
+});
+
 function checkGuess() {
     const row = grid.children[currentRow];
     let guessedWord = '';
@@ -74,6 +91,7 @@ function checkGuess() {
         alert("Game Over! The word was: " + wordAnswer);
         score.lives -= 1;
         localStorage.setItem('score', JSON.stringify(score));
+        updateHearts();
         testShowScore();
         resetGame();
     }
@@ -101,17 +119,9 @@ function resetGame() {
 }
 
 function testShowScore(){
-    console.log(`Wins: ${score.wins}, Losses: ${score.losses}`);
+    console.log(`Wins: ${score.wins}, Lives: ${score.lives}`);
 }
 
-document.querySelector('.js-resetScore')
-    .addEventListener('click', () => {
-        score.wins = 0;
-        score.lives = 3;
-        localStorage.removeItem('score');
-        testShowScore();
-    }
-)
 
 
 // Function to load enemy image
@@ -140,5 +150,52 @@ function loadBackgroundImage(level) {
 // Load the first level's enemy image
 loadEnemyImage(level1);
 loadBackgroundImage(level1);
+
+// Function to toggle the pause modal
+// Function to toggle the pause modal
+function togglePauseModal() {
+    const modal = document.getElementById('pauseModal');
+    if (modal.style.display === "none" || modal.style.display === "") {
+        modal.style.display = "flex"; // Show the modal
+    } else {
+        modal.style.display = "none"; // Hide the modal
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('pauseModal');
+    modal.style.display = 'none'; // Ensure the modal is hidden initially
+});
+
+
+// Event listener for key press
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        togglePauseModal(); // Show the modal only when Esc is pressed
+    }
+});
+
+// Event listener for "Continue" button
+document.getElementById('continueGame').addEventListener('click', function() {
+    togglePauseModal(); // Hide the modal and continue the game
+});
+
+// Event listener for "Return to Menu" button
+document.getElementById('returnToMenu').addEventListener('click', function() {
+    window.location.href = "index.html"; // Redirect to the menu or lobby
+});
+
+// Event listener for "Reset Score" button
+document.getElementById('resetScore').addEventListener('click', () => {
+    score.wins = 0;
+    score.lives = 3;
+    localStorage.removeItem('score');
+    updateHearts();
+    testShowScore();
+    togglePauseModal(); // Hide the modal after resetting the score
+});
+
+
+
 
 

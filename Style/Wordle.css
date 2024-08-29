@@ -66,7 +66,7 @@ body, html {
 .main-character{
     width: 250px; /* Adjust width as needed */
     height: 250px; /* Adjust height as needed */
-    background-color: aliceblue;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +87,7 @@ body, html {
     top: 175px;
 }
 
-.Enemy-image{
+.Enemy-image, .MC-image{
     max-width: 100%;
     max-height: 100%;
     object-fit: contain; /* Ensure the image fits within the div without distortion */
@@ -131,9 +131,47 @@ body, html {
     align-items: center;
 }
 
-.returnButton{
-    margin-left: 24px;
-    margin-right: 24px;
+.heart-container {
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+    gap: 5px; /* Space between hearts */
 }
+
+.heart-container img {
+    width: 30px; /* Adjust the size as needed */
+    height: 30px;
+}
+
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#pauseModal button {
+    margin: 10px;
+}
+
 
 

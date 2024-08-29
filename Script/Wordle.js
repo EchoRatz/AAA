@@ -1,9 +1,10 @@
-let score = JSON.parse(localStorage.getItem('score')) || {
+let stat = JSON.parse(localStorage.getItem('stat')) || {
     wins: 0,
-    lives: 3
+    lives: 3,
+    attackDmg: 20
 }
 
-testShowScore();
+testShowstat();
 
 // for testing purposes, make sure to use the test dictionary
 console.log('test dictionary:', testDictionary);
@@ -38,7 +39,7 @@ function updateHearts() {
     const heartContainer = document.querySelector('.js-heart-container');
     heartContainer.innerHTML = ''; // Clear the container
 
-    for (let i = 0; i < score.lives; i++) {
+    for (let i = 0; i < stat.lives; i++) {
         const heart = document.createElement('img');
         heart.src = 'Style/source/heart.png'; // Path to your heart image
         heart.alt = 'Heart';
@@ -78,9 +79,9 @@ function checkGuess() {
         // Use setTimeout to ensure the background color change is visible before the alert
         setTimeout(() => {
             alert("Congratulations! You've guessed the word!");
-            score.wins += 1;
-            localStorage.setItem('score', JSON.stringify(score));
-            testShowScore();
+            stat.wins += 1;
+            localStorage.setItem('stat', JSON.stringify(stat));
+            testShowstat();
             resetGame();
         }, 300);  // Delay to ensure the color change is rendered
         
@@ -89,10 +90,10 @@ function checkGuess() {
         currentCol = 0;
     } else {
         alert("Game Over! The word was: " + wordAnswer);
-        score.lives -= 1;
-        localStorage.setItem('score', JSON.stringify(score));
+        stat.lives -= 1;
+        localStorage.setItem('stat', JSON.stringify(stat));
         updateHearts();
-        testShowScore();
+        testShowstat();
         resetGame();
     }
 
@@ -118,8 +119,8 @@ function resetGame() {
     console.log(`New Word: ${wordAnswer}`);
 }
 
-function testShowScore(){
-    console.log(`Wins: ${score.wins}, Lives: ${score.lives}`);
+function testShowstat(){
+    console.log(`Wins: ${stat.wins}, Lives: ${stat.lives}`);
 }
 
 
@@ -185,14 +186,14 @@ document.getElementById('returnToMenu').addEventListener('click', function() {
     window.location.href = "index.html"; // Redirect to the menu or lobby
 });
 
-// Event listener for "Reset Score" button
-document.getElementById('resetScore').addEventListener('click', () => {
-    score.wins = 0;
-    score.lives = 3;
-    localStorage.removeItem('score');
+// Event listener for "Reset stat" button
+document.getElementById('resetStat').addEventListener('click', () => {
+    stat.wins = 0;
+    stat.lives = 3;
+    localStorage.removeItem('stat');
     updateHearts();
-    testShowScore();
-    togglePauseModal(); // Hide the modal after resetting the score
+    testShowstat();
+    togglePauseModal(); // Hide the modal after resetting the stat
 });
 
 

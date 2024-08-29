@@ -1,41 +1,34 @@
-const stat = JSON.parse(localStorage.getItem('stat')) || {
+let stat = JSON.parse(localStorage.getItem('stat')) || {
     wins: 0,
     lives: 3,
-    attackDmg: 50,
-}
+    attackDmg: 50
+};
 
-let currentProgress = JSON.parse(localStorage.getItem('currentProgress')) || {
+let currentProgress = JSON.parse(sessionStorage.getItem('currentProgress')) || {
     currentLevel: 1,
     currentEnemy: 1,
     remainingLives: 3,
     currentEnemyHealth: 100
-}
-
-let saveProgress = JSON.parse(localStorage.getItem('currentProgress')) || {
-    currentLevel: 1,
-    currentEnemy: 1,
-    remainingLives: 3,
-    currentEnemyHealth: 100
-}
+};
 
 let achievement = JSON.parse(localStorage.getItem('achievement')) || {
     wins: 0,
+};
+
+ //Check if there's saved progress in sessionStorage
+if (sessionStorage.getItem('currentProgress')) {
+    currentProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
+} else {
+    resetCurrentProgress(); // Reset progress if not saved
 }
 
 testShowstat();
 
-// for testing purposes, make sure to use the test dictionary
-console.log('test dictionary:', testDictionary);
-
 let wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
-
-
-console.log(`Word: ${wordAnswer}`);
-
+console.log(`Anser: ${wordAnswer}`);
 let currentRow = 0;
 let currentCol = 0;
 const grid = document.querySelector('.wordle-grid');
-console.log(`${grid}`);
 
 document.addEventListener('keydown', (event) => {
     if (event.key >= 'a' && event.key <= 'z') {
@@ -65,7 +58,6 @@ function updateHearts() {
     }
 }
 
-// Call this function when the game initializes and whenever lives change
 document.addEventListener('DOMContentLoaded', () => {
     updateHearts();
 });
@@ -89,61 +81,43 @@ function checkGuess() {
     }
 
     if (guessedWord === wordAnswer) {
-
-        for (let i = 0; i < 5; i++) {
-            row.children[i].style.backgroundColor = '#538d4e';
-        }
-        
-        // Reduce the enemy's health by the player's attack damage
         currentProgress.currentEnemyHealth -= stat.attackDmg;
-        console.log(`${stat.attackDmg}`);
-        console.log(`Enemy health is now: ${currentProgress.currentEnemyHealth}`);
+        console.log(`EnemyCurrentHealth: ${currentProgress.currentEnemyHealth}`);
 
         if (currentProgress.currentEnemyHealth <= 0) {
-            // Move to the next enemy
             currentProgress.currentEnemy++;
             if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
-                // If no more enemies, move to the next level
                 currentProgress.currentLevel++;
-                currentProgress.currentEnemy = 1; // Reset to the first enemy in the new level
+                currentProgress.currentEnemy = 1; 
             }
-
-            // Load the new enemy or level
-            loadLevelContent(); // Load the new background and enemy
+            loadLevelContent();
         }
 
-        // Save progress after each win
-        localStorage.setItem('currentProgress', JSON.stringify(currentProgress));
-
-        // Use setTimeout to ensure the background color change is visible before the alert
         setTimeout(() => {
             alert("Congratulations! You've guessed the word!");
             achievement.wins += 1;
             localStorage.setItem('achievement', JSON.stringify(achievement));
             testShowstat();
             resetGame();
-        }, 300);  // Delay to ensure the color change is rendered
-        
+            saveProgress();
+        }, 300);
     } else if (currentRow < 5) {
         currentRow++;
         currentCol = 0;
     } else {
         alert("Game Over! The word was: " + wordAnswer);
         currentProgress.remainingLives -= 1;
-        localStorage.setItem('currentProgress', JSON.stringify(currentProgress));
         updateHearts();
         testShowstat();
         if (currentProgress.remainingLives > 0) {
             resetGame();
         } else {
-            // Game Over: Reset currentProgress to default values and restart the game
             alert("You've lost all lives. Progress is reset.");
             resetCurrentProgress();
             resetGame();
         }
+        saveProgress();
     }
-
-    
 }
 
 function resetCurrentProgress() {
@@ -151,18 +125,29 @@ function resetCurrentProgress() {
         currentLevel: 1,
         currentEnemy: 1,
         remainingLives: 3,
-        currentEnemyHealth: levels[0].enemies[0].health // Set to the health of the first enemy
+        currentEnemyHealth: levels[0].enemies[0].health 
     };
 
-    localStorage.setItem('currentProgress', JSON.stringify(currentProgress));
-    updateHearts(); // Ensure hearts are updated after resetting progress
-
+    sessionStorage.setItem('currentProgress', JSON.stringify(currentProgress));
+    updateHearts();
+    loadLevelContent();
 }
 
+function saveProgress() {
+    sessionStorage.setItem('currentProgress', JSON.stringify(currentProgress));
+}
+
+window.addEventListener('beforeunload', () => {
+    saveProgress();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadLevelContent(); 
+    sessionStorage.setItem('sessionSave', 'true');
+});
 
 function resetGame() {
-     // Clear the grid
-     for (let i = 0; i < grid.children.length; i++) {
+    for (let i = 0; i < grid.children.length; i++) {
         const row = grid.children[i];
         for (let j = 0; j < row.children.length; j++) {
             row.children[j].textContent = '';
@@ -170,62 +155,50 @@ function resetGame() {
         }
     }
 
-    // Reset the row and column counters
     currentRow = 0;
     currentCol = 0;
-
-    // Select a new word
     wordAnswer = realDictionary[Math.floor(Math.random() * realDictionary.length)];
-    console.log(`New Word: ${wordAnswer}`);
-
-    // Reload the level content
+    console.log(`Anser: ${wordAnswer}`);
     loadLevelContent();
     updateHearts();
 }
 
-/* for debugging and reset
 document.getElementById('resetStat').addEventListener('click', () => {
     stat.wins = 0;
     stat.lives = 3;
-    stat.attackDmg = 50; // Ensure it resets to 50, not 20
+    stat.attackDmg = 50;
     localStorage.setItem('stat', JSON.stringify(stat));
     achievement.wins = 0;
-    localStorage.setItem('achievement', JSON.stringify(achievement));// Save the correct values
+    localStorage.setItem('achievement', JSON.stringify(achievement));
     updateHearts();
     testShowstat();
-    togglePauseModal(); // Hide the modal after resetting the stat
+    togglePauseModal();
 });
-*/
 
-
-function testShowstat(){
+function testShowstat() {
     console.log(`Wins: ${achievement.wins}, Lives: ${currentProgress.remainingLives}`);
 }
 
-
-
 function loadEnemyImage() {
     const enemyImage = document.querySelector('.js-enemy-image');
-    const level = levels[currentProgress.currentLevel - 1]; // Adjust for zero-based index
+    const level = levels[currentProgress.currentLevel - 1]; 
 
     if (enemyImage && level && level.enemies.length >= currentProgress.currentEnemy) {
-        const enemy = level.enemies[currentProgress.currentEnemy - 1]; // Adjust for zero-based index
-        enemyImage.src = enemy.image; // Load the image of the current enemy
+        const enemy = level.enemies[currentProgress.currentEnemy - 1];
+        enemyImage.src = enemy.image;
         console.log(`Loaded enemy: ${enemy.type} with health: ${enemy.health}`);
     } else {
         console.error("No enemy image found or image element missing.");
     }
 }
 
-// Call this function when the game initializes or when the level/enemy changes
 document.addEventListener('DOMContentLoaded', () => {
-    loadEnemyImage(); // Load the current enemy image on page load
+    loadEnemyImage();
 });
-
 
 function loadBackgroundImage() {
     const upperSection = document.querySelector('.upper-section');
-    const level = levels[currentProgress.currentLevel - 1]; // Adjust for zero-based index
+    const level = levels[currentProgress.currentLevel - 1];
 
     if (upperSection && level && level.background) {
         upperSection.style.backgroundImage = `url(${level.background})`;
@@ -239,106 +212,90 @@ function loadBackgroundImage() {
 }
 
 function loadLevelContent() {
-    loadBackgroundImage(); // Load the current level's background
-    loadEnemyImage(); // Load the current enemy image
+    loadBackgroundImage();
+    loadEnemyImage();
 
-    // Update the current enemy's health
-   // Update the current enemy's health only if it's not already set
-   if (currentProgress.currentEnemyHealth === undefined || currentProgress.currentEnemyHealth <= 0) {
-    const level = levels[currentProgress.currentLevel - 1];
-    if (level && level.enemies.length >= currentProgress.currentEnemy) {
-        const enemy = level.enemies[currentProgress.currentEnemy - 1];
-        currentProgress.currentEnemyHealth = enemy.health; // Set health to the current enemy's health
-        console.log(`Loaded enemy: ${enemy.type} with health: ${currentProgress.currentEnemyHealth}`);
+    if (currentProgress.currentEnemyHealth === undefined || currentProgress.currentEnemyHealth <= 0) {
+        const level = levels[currentProgress.currentLevel - 1];
+        if (level && level.enemies.length >= currentProgress.currentEnemy) {
+            const enemy = level.enemies[currentProgress.currentEnemy - 1];
+            currentProgress.currentEnemyHealth = enemy.health;
+            console.log(`Loaded enemy: ${enemy.type} with health: ${currentProgress.currentEnemyHealth}`);
+        }
     }
 }
-}
 
-// Call this combined function on page load or after loading progress
 document.addEventListener('DOMContentLoaded', () => {
-    loadLevelContent(); // Load both the background and enemy on page load
+    loadLevelContent();
 });
 
-
-// Function to toggle the pause modal
 function togglePauseModal() {
     const modal = document.getElementById('pauseModal');
-    if (modal.style.display === "none" || modal.style.display === "") {
-        modal.style.display = "flex"; // Show the modal
-    } else {
-        modal.style.display = "none"; // Hide the modal
-    }
+    modal.style.display = modal.style.display === "none" || modal.style.display === "" ? "flex" : "none";
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('pauseModal');
-    modal.style.display = 'none'; // Ensure the modal is hidden initially
+    modal.style.display = 'none';
 });
 
-
-// Event listener for key press
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
-        togglePauseModal(); // Show the modal only when Esc is pressed
+        togglePauseModal();
     }
 });
 
-// Event listener for "Continue" button
 document.getElementById('continueGame').addEventListener('click', function() {
-    togglePauseModal(); // Hide the modal and continue the game
+    togglePauseModal();
 });
 
-// Event listener for "Return to Menu" button
-document.getElementById('returnToMenu').addEventListener('click', function() {
-    window.location.href = "index.html"; // Redirect to the menu or lobby
+document.getElementById('returnToMenu').addEventListener('click', () => {
+    sessionStorage.removeItem('currentProgress');
+    sessionStorage.removeItem('sessionSave');
+
+    sessionStorage.clear();
+    console.log(`session clear`);
+    window.location.href = "index.html";
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     const row1 = document.getElementById('row1');
     const row2 = document.getElementById('row2');
     const row3 = document.getElementById('row3');
-  
-    // Letters for each row based on a QWERTY layout
+
     const row1Letters = 'qwertyuiop'.split('');
     const row2Letters = 'asdfghjkl'.split('');
     const row3Letters = 'zxcvbnm'.split('');
-  
-  // Function to create keyboard buttons
-  function createKeyboardRow(row, letters) {
-    letters.forEach(letter => {
-      const button = document.createElement('button');
-      button.textContent = letter;
-      button.classList.add('key-button');
-      button.dataset.state = '0'; // Initialize with state 0
-      button.addEventListener('click', () => cycleButtonState(button));
-      row.appendChild(button);
-    });
-  }
 
-  // Function to cycle the button's state between four different states (including the normal state)
-  function cycleButtonState(button) {
-    // Remove any existing state class
-    button.classList.remove('state-1', 'state-2', 'state-3');
-    
-    // Determine the current state and cycle to the next one
-    if (button.dataset.state === '0') {
-      button.dataset.state = '1';
-      button.classList.add('state-1');
-    } else if (button.dataset.state === '1') {
-      button.dataset.state = '2';
-      button.classList.add('state-2');
-    } else if (button.dataset.state === '2') {
-      button.dataset.state = '3';
-      button.classList.add('state-3');
-    } else {
-      button.dataset.state = '0'; // Reset to normal state
+    function createKeyboardRow(row, letters) {
+        letters.forEach(letter => {
+            const button = document.createElement('button');
+            button.textContent = letter;
+            button.classList.add('key-button');
+            button.dataset.state = '0';
+            button.addEventListener('click', () => cycleButtonState(button));
+            row.appendChild(button);
+        });
     }
-  }
-  
-    // Initialize the keyboard rows
+
+    function cycleButtonState(button) {
+        button.classList.remove('state-1', 'state-2', 'state-3');
+
+        if (button.dataset.state === '0') {
+            button.dataset.state = '1';
+            button.classList.add('state-1');
+        } else if (button.dataset.state === '1') {
+            button.dataset.state = '2';
+            button.classList.add('state-2');
+        } else if (button.dataset.state === '2') {
+            button.dataset.state = '3';
+            button.classList.add('state-3');
+        } else {
+            button.dataset.state = '0';
+        }
+    }
+
     createKeyboardRow(row1, row1Letters);
     createKeyboardRow(row2, row2Letters);
     createKeyboardRow(row3, row3Letters);
-  });
-
-
+});

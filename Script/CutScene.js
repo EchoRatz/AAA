@@ -1,13 +1,13 @@
 const dialogues = [
     {
       text: "Oh no, it's 3p.m already and I haven't fed the dinosaur yet, they must be very hungry by now.",
-      portrait: "/Style/source/edogawa-conan.jpg",
-      name: "Conan" // Add character name
+      portrait: "/Style/source/Doc.png",
+      name: "Doc" // Add character name
     },
     { 
       text: "Let's grab a bucket of meat and feed them now.", 
-      portrait: "/Style/source/edogawa-conan.jpg", 
-      name: "Conan" 
+      portrait: "/Style/source/Doc.png", 
+      name: "Doc" 
     },
     { 
       text: "So hungry, where is my food!", 
@@ -21,8 +21,8 @@ const dialogues = [
     },
     { 
       text: "AAAAHHHH Why are you so aggressive today!", 
-      portrait: "/Style/source/edogawa-conan.jpg", 
-      name: "Conan" 
+      portrait: "/Style/source/Doc.png", 
+      name: "Doc" 
     }
   ];
   

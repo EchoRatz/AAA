@@ -1,4 +1,4 @@
-// Get the audio elements by their IDs
+let normalStart = true;// Get the audio elements by their IDs
 const backgroundMusic = document.getElementById('MenuMusic');
 const clickSound = document.getElementById('ClickSound');
 
@@ -40,8 +40,56 @@ function playClickSound() {
 
 // Initialize both autoplay attempt and button click sounds on page load
 document.addEventListener('DOMContentLoaded', () => {
+  const menuMusic = document.getElementById('MenuMusic');
+  const clickSound = document.getElementById('ClickSound');
+  const startGameButton = document.getElementById('ClickButton');
+  const loadGameButton = document.getElementById('loadButton');
+
+  // Start playing the main menu music when the page loads
+  menuMusic.volume = 0.5;
+  menuMusic.play();
   attemptAutoplay(); // Try to autoplay background music
 
+  // Handle click event on the "Play Game" button
+  startGameButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    normalStart = true; // Indicate a normal start
+
+    clickSound.currentTime = 0;
+    clickSound.play();
+
+    menuMusic.pause();
+    menuMusic.currentTime = 0;
+
+    // Clear session storage to ensure a fresh start
+    sessionStorage.clear();
+
+    setTimeout(() => {
+      window.location.href = 'Cutscene.html';
+    }, 200);
+  });
+
+  // Handle click event on the "Resume" button
+  loadGameButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    normalStart = false; // Indicate that we are resuming from a saved game
+
+    // Check if there is saved progress in localStorage
+    const savedProgress = localStorage.getItem('gameSaveProgress');
+    if (savedProgress) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      menuMusic.pause();
+      menuMusic.currentTime = 0;
+
+      // Skip the cutscene and go directly to the Wordle game
+      setTimeout(() => {
+        window.location.href = 'Wordle.html';
+      }, 200);
+    } else {
+      alert("No saved game progress found.");
+    }
   // Add event listeners to all buttons for click sound
   const buttons = document.querySelectorAll('button'); // Select all button elements
   buttons.forEach(button => {

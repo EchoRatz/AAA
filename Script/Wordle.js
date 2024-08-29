@@ -11,6 +11,13 @@ let currentProgress = JSON.parse(sessionStorage.getItem('currentProgress')) || {
     currentEnemyHealth: 100
 };
 
+let gameSaveProgress = JSON.parse(sessionStorage.getItem('saveProgress')) || {
+    currentLevel: 1,
+    currentEnemy: 1,
+    remainingLives: 3,
+    currentEnemyHealth: 100
+};
+
 let achievement = JSON.parse(localStorage.getItem('achievement')) || {
     wins: 0,
 };
@@ -137,6 +144,17 @@ function saveProgress() {
     sessionStorage.setItem('currentProgress', JSON.stringify(currentProgress));
 }
 
+// New function to save progress from sessionStorage to localStorage
+function saveProgressToLocalStorage() {
+    const progress = JSON.parse(sessionStorage.getItem('currentProgress'));
+    if (progress) {
+        localStorage.setItem('gameSaveProgress', JSON.stringify(progress));
+        console.log('Progress saved to localStorage:', progress);
+    } else {
+        console.log('No progress found in sessionStorage to save.');
+    }
+}
+
 window.addEventListener('beforeunload', () => {
     saveProgress();
 });
@@ -257,6 +275,28 @@ document.getElementById('returnToMenu').addEventListener('click', () => {
     console.log(`session clear`);
     window.location.href = "index.html";
 });
+
+document.getElementById('saveGame').addEventListener('click', () => {
+    saveProgressToLocalStorage();
+});
+
+//new piece
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if there's saved progress in localStorage
+    const savedProgress = JSON.parse(localStorage.getItem('gameSaveProgress'));
+
+    if (savedProgress && normalStart === false) {
+        currentProgress = savedProgress;
+        sessionStorage.setItem('currentProgress', JSON.stringify(currentProgress));
+        console.log('Loaded saved progress from localStorage:', currentProgress);
+    }
+
+    // Continue with the existing logic to load the level and start the game
+    loadLevelContent(); 
+    updateHearts();
+    sessionStorage.setItem('sessionSave', 'true');
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const row1 = document.getElementById('row1');

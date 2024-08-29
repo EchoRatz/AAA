@@ -11,24 +11,78 @@
 <body>
 
     <div class="container glass">
-        <a href="Cutscene.html">
-            <button onclick = "sessionStorage.clear();" class="btn btn-outline-light playButton" id = "ClickButton">Play Game</button>
+        <a href="Cutscene.html" id="start-game-link">
+            <button id="StartButton" class="btn btn-outline-light playButton">Play Game</button>
         </a>
 
-        <button id = "loadGame" class = "btn btn-outline-light LoadButton">Load</button>
+        <button id="LoadButton" class="btn btn-outline-light LoadButton">Load</button>
 
-        <button class="btn btn-outline-light howToPlayButton" onclick="openPopup()">How To Play</button>
+        <button id="OpenTutorialButton" class="btn btn-outline-light howToPlayButton" onclick="openPopup()">How To Play</button>
         <div class="popup" id="popup">
-            <button class="okButton button" onclick="closePopup()">OK</button>
+            <button id="CloseTutorialButton" class="okButton button" onclick="closePopup()">OK</button>
         </div>
 
     </div>
 
-     <!-- Audio for Main Menu -->
-    <audio id = "MenuMusic" src = "./audio/Menu.mp3" loop></audio>
-    <audio id = "ClickSound" src = "./audio/ClickEffect.mp3"></audio>
+    <!-- Audio for Main Menu -->
+    <audio id="MenuMusic" src="./audio/Menu.mp3" loop preload="auto"></audio>
+    <audio id="ClickSound" src="./audio/ClickEffect.mp3" preload="auto"></audio>
 
     <script>
+        // Autoplay Background Music
+        const backgroundMusic = document.getElementById('MenuMusic');
+        const clickSound = document.getElementById('ClickSound');
+
+        // Try to play the audio when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            backgroundMusic.muted = false;
+            backgroundMusic.play().then(() => {
+                console.log('Audio is playing.');
+            }).catch(error => {
+                console.log('Autoplay was prevented:', error);
+                // Optionally, try again when the page becomes visible or focused
+                handleAutoplayRetry();
+            });
+
+            // Add event listeners to all buttons for click sound
+            const buttons = document.querySelectorAll('button'); // Select all button elements
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    playClickSound(event, button);
+                });
+            });
+        });
+
+        // Function to play click sound and handle navigation delay
+        function playClickSound(event, button) {
+            clickSound.currentTime = 0; // Reset the sound to start
+            clickSound.play().catch(error => {
+                console.error('Error playing click sound:', error); // Log any errors
+            });
+
+            if (button.id === 'StartButton') {
+                // Prevent default anchor navigation
+                event.preventDefault();
+
+                // Delay navigation to allow sound effect to play
+                setTimeout(() => {
+                    window.location.href = document.getElementById('start-game-link').href;
+                }, 200); // Adjust delay as needed
+            }
+        }
+
+        // Function to handle autoplay retry if initially blocked
+        function handleAutoplayRetry() {
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    backgroundMusic.play().catch(error => {
+                        console.log('Autoplay was still prevented after retry:', error);
+                    });
+                }
+            });
+        }
+
+        // Popup handling functions
         let popup = document.getElementById("popup");
 
         function openPopup() {
@@ -40,10 +94,9 @@
         }
     </script>
 
-    <script src = "Framework/js/bootstrap.min.js"></script>
-    <script src = "Script/Wordle.js"></script>
-    <script src = "Script/Main.js"></script>
-    <script src = "Script/CutScene.js"></script>
+    <script src="Framework/js/bootstrap.min.js"></script>
+    <script src="Script/Wordle.js"></script>
+    <script src="Script/Main.js"></script>
+    <script src="Script/CutScene.js"></script>
 </body>
 </html>
-

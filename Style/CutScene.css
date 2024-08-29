@@ -63,21 +63,35 @@ body {
     line-height: 1.5;
     max-height: 100%; /* Ensure text doesn't overflow the container */
     overflow-y: auto; /* Adds a vertical scroll if content exceeds the fixed height */
+    font-size: 25px;
   }
   
-  #next-button {
-    position: absolute; /* Position button relative to the dialogue box */
-    bottom: 20px; /* Position it at the bottom of the dialogue box */
-    right: 20px; /* Align to the right side */
-    padding: 10px 20px;
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  #character-name {
+    position: absolute; /* Position it within the container */
+    top: 30px; /* Adjust as necessary to position above the dialogue */
+    left: 29%; /* Center it horizontally */
+    transform: translateX(-50%); /* Center it */
+    padding: 5px 10px;
+    color: white; /* Text color */
+    font-weight: bold; /* Make the text bold */
+    text-align: center;
+    font-size: 40px; /* Slightly larger font for emphasis */
   }
   
-  #next-button:hover {
-    background-color: #c0392b;
+  @keyframes vibrate {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
   
+  .screen-vibrate {
+    animation: vibrate 0.5s linear; /* Apply the shake animation */
+  }  

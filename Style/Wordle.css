@@ -8,8 +8,6 @@ body, html {
     flex-direction: column;
 }
 
-
-
 .wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
@@ -98,8 +96,6 @@ body, html {
     background-color: #222;
 }
 
-
-
 .header{
     height: 55px;
 
@@ -137,8 +133,6 @@ body, html {
     height: 30px;
 }
 
-
-
 .modal {
     display: none; /* Hidden by default */
     position: fixed;
@@ -153,7 +147,6 @@ body, html {
     align-items: center;
 }
 
-
 .modal-content {
     background-color: #fefefe;
     padding: 20px;
@@ -166,6 +159,3 @@ body, html {
 #pauseModal button {
     margin: 10px;
 }
-
-
-

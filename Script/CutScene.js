@@ -133,7 +133,7 @@ const dialogues = [
   
   // Initial dialogue setup
   updateDialogue();
-  
+
   function redirectToNewPage(url) {
     console.log(`Redirecting to ${url}...`);
     window.location.href = url;

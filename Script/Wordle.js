@@ -1,7 +1,18 @@
 let stat = JSON.parse(localStorage.getItem('stat')) || {
     wins: 0,
     lives: 3,
-    attackDmg: 20
+    attackDmg: 20,
+}
+
+let currentProgress = JSON.parse(localStorage.getItem('currentProgress')) || {
+    currentLevel: 1,
+    currentEnemy: 1,
+    remainingLives: 3,
+    currentEnemyHealth: 100
+}
+
+let achievement = JSON.parse(localStorage.getItem('achievement')) || {
+    wins: 0,
 }
 
 testShowstat();
@@ -39,7 +50,7 @@ function updateHearts() {
     const heartContainer = document.querySelector('.js-heart-container');
     heartContainer.innerHTML = ''; // Clear the container
 
-    for (let i = 0; i < stat.lives; i++) {
+    for (let i = 0; i < currentProgress.remainingLives; i++) {
         const heart = document.createElement('img');
         heart.src = 'Style/source/heart.png'; // Path to your heart image
         heart.alt = 'Heart';
@@ -79,7 +90,7 @@ function checkGuess() {
         // Use setTimeout to ensure the background color change is visible before the alert
         setTimeout(() => {
             alert("Congratulations! You've guessed the word!");
-            stat.wins += 1;
+            achievement.wins += 1;
             localStorage.setItem('stat', JSON.stringify(stat));
             testShowstat();
             resetGame();
@@ -90,11 +101,16 @@ function checkGuess() {
         currentCol = 0;
     } else {
         alert("Game Over! The word was: " + wordAnswer);
-        stat.lives -= 1;
-        localStorage.setItem('stat', JSON.stringify(stat));
+        currentProgress.remainingLives -= 1;
+        localStorage.setItem('currentProgress', JSON.stringify(currentProgress));
         updateHearts();
         testShowstat();
-        resetGame();
+        if (currentProgress.remainingLives > 0) {
+            resetGame();
+        } else {
+            localStorage.removeItem('savedGame'); // Clear the save if the player dies
+            alert("You've lost all lives. Progress is reset.");
+        }
     }
 
     
@@ -125,34 +141,51 @@ function testShowstat(){
 
 
 
-// Function to load enemy image
-function loadEnemyImage(level) {
+function loadEnemyImage() {
     const enemyImage = document.querySelector('.js-enemy-image');
-    if (enemyImage && level.enemies.length > 0) {
-        enemyImage.src = level.enemies[0].image; // Load the image of the first enemy in the array
+    const level = levels[currentProgress.currentLevel - 1]; // Adjust for zero-based index
+
+    if (enemyImage && level && level.enemies.length >= currentProgress.currentEnemy) {
+        const enemy = level.enemies[currentProgress.currentEnemy - 1]; // Adjust for zero-based index
+        enemyImage.src = enemy.image; // Load the image of the current enemy
+        console.log(`Loaded enemy: ${enemy.type} with health: ${enemy.health}`);
     } else {
         console.error("No enemy image found or image element missing.");
     }
 }
 
-// Function to load background image
-function loadBackgroundImage(level) {
+// Call this function when the game initializes or when the level/enemy changes
+document.addEventListener('DOMContentLoaded', () => {
+    loadEnemyImage(); // Load the current enemy image on page load
+});
+
+
+function loadBackgroundImage() {
     const upperSection = document.querySelector('.upper-section');
-    if (upperSection && level.background) {
+    const level = levels[currentProgress.currentLevel - 1]; // Adjust for zero-based index
+
+    if (upperSection && level && level.background) {
         upperSection.style.backgroundImage = `url(${level.background})`;
         upperSection.style.backgroundSize = 'cover';
         upperSection.style.backgroundPosition = 'center';
         upperSection.style.backgroundRepeat = 'no-repeat';
+        console.log(`Loaded background for level: ${currentProgress.currentLevel}`);
     } else {
         console.error("No background image found or element missing.");
     }
 }
 
-// Load the first level's enemy image
-loadEnemyImage(level1);
-loadBackgroundImage(level1);
+function loadLevelContent() {
+    loadBackgroundImage(); // Load the current level's background
+    loadEnemyImage(); // Load the current enemy image
+}
 
-// Function to toggle the pause modal
+// Call this combined function on page load or after loading progress
+document.addEventListener('DOMContentLoaded', () => {
+    loadLevelContent(); // Load both the background and enemy on page load
+});
+
+
 // Function to toggle the pause modal
 function togglePauseModal() {
     const modal = document.getElementById('pauseModal');
@@ -196,6 +229,21 @@ document.getElementById('resetStat').addEventListener('click', () => {
     testShowstat();
     togglePauseModal(); // Hide the modal after resetting the stat
 });
+
+function saveGame() {
+    localStorage.setItem('savedGame', JSON.stringify({
+        lives: stat.lives,
+        wins: stat.wins,
+        currentLevel: currentLevel, // Assuming you have a currentLevel variable
+        wordAnswer: wordAnswer,     // Save the current word answer
+    }));
+    alert("Game progress saved!");
+}
+
+
+
+// Event listeners for save and load buttons
+document.getElementById('saveGame').addEventListener('click', saveGame);
 
 
 

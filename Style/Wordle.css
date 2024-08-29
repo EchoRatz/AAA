@@ -8,14 +8,7 @@ body, html {
     flex-direction: column;
 }
 
-.wordle-grid-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Aligns the grid to the bottom */
-    position: relative;
-    margin-bottom: 20px; /* Optional: Adds some space at the bottom */
-}
+
 
 .wordle-grid {
     display: grid;
@@ -24,7 +17,7 @@ body, html {
     max-width: 400px;
     margin: 100px auto;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

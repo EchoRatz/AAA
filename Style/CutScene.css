@@ -33,7 +33,7 @@ body {
     display: flex; /* Flex container for portrait, text, and button */
     justify-content: flex-start; /* Align items to the start (left side) */
     align-items: center; /* Center items vertically */
-    height: 480px; /* Fixed height for the text box */
+    height: 45%; /* Fixed height for the text box */
     box-sizing: border-box; /* Ensures padding is included in the total height */
   }
   

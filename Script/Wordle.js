@@ -190,6 +190,7 @@ document.getElementById('returnToMenu').addEventListener('click', function() {
 document.getElementById('resetStat').addEventListener('click', () => {
     stat.wins = 0;
     stat.lives = 3;
+    stat.attackDmg = 20;
     localStorage.removeItem('stat');
     updateHearts();
     testShowstat();

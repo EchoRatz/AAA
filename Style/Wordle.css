@@ -159,3 +159,67 @@ body, html {
 #pauseModal button {
     margin: 10px;
 }
+  
+#keyboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 500px;
+    position: absolute;
+    bottom: 160px;
+    left: 100px;
+    align-items: center;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  #row1 {
+    margin-left: 0; /* Top row aligned normally */
+  }
+  
+  #row2 {
+    margin-left: 20px; /* Middle row slightly indented */
+  }
+  
+  #row3 {
+    margin-left: 60px; /* Bottom row further indented */
+  }
+  
+  .key-button {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* Different states for used letters */
+.key-button.state-1 {
+    background-color: #e84643; /* Light Red */
+    color: #000000;
+  }
+  
+  .key-button.state-2 {
+    background-color: #ffff99; /* Light Yellow */
+    color: #000000;
+  }
+  
+  .key-button.state-3 {
+    background-color: #90ee90; /* Light Green */
+    color: #000000;
+  }
+
+  #pause-message {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #666;
+  }

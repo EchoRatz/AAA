@@ -246,6 +246,52 @@ function saveGame() {
 document.getElementById('saveGame').addEventListener('click', saveGame);
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    const row1 = document.getElementById('row1');
+    const row2 = document.getElementById('row2');
+    const row3 = document.getElementById('row3');
+  
+    // Letters for each row based on a QWERTY layout
+    const row1Letters = 'qwertyuiop'.split('');
+    const row2Letters = 'asdfghjkl'.split('');
+    const row3Letters = 'zxcvbnm'.split('');
+  
+  // Function to create keyboard buttons
+  function createKeyboardRow(row, letters) {
+    letters.forEach(letter => {
+      const button = document.createElement('button');
+      button.textContent = letter;
+      button.classList.add('key-button');
+      button.dataset.state = '0'; // Initialize with state 0
+      button.addEventListener('click', () => cycleButtonState(button));
+      row.appendChild(button);
+    });
+  }
 
+  // Function to cycle the button's state between four different states (including the normal state)
+  function cycleButtonState(button) {
+    // Remove any existing state class
+    button.classList.remove('state-1', 'state-2', 'state-3');
+    
+    // Determine the current state and cycle to the next one
+    if (button.dataset.state === '0') {
+      button.dataset.state = '1';
+      button.classList.add('state-1');
+    } else if (button.dataset.state === '1') {
+      button.dataset.state = '2';
+      button.classList.add('state-2');
+    } else if (button.dataset.state === '2') {
+      button.dataset.state = '3';
+      button.classList.add('state-3');
+    } else {
+      button.dataset.state = '0'; // Reset to normal state
+    }
+  }
+  
+    // Initialize the keyboard rows
+    createKeyboardRow(row1, row1Letters);
+    createKeyboardRow(row2, row2Letters);
+    createKeyboardRow(row3, row3Letters);
+  });
 
 

@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const menuMusic = document.getElementById('MenuMusic');
   const clickSound = document.getElementById('ClickSound');
-  const startGameButton = document.getElementById('ClickButton');
+  const startGameButton = document.getElementById('startButton');
   const loadGameButton = document.getElementById('loadButton');
 
   

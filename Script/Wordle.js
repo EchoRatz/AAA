@@ -58,10 +58,6 @@ function updateHearts() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    updateHearts();
-});
-
 function checkGuess() {
     const row = grid.children[currentRow];
     let guessedWord = '';
@@ -152,32 +148,8 @@ document.getElementById('saveGame').addEventListener('click', () => {
     saveProgressToLocalStorage(); // Save the current progress to localStorage
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if there's saved progress in localStorage
-    const savedProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
-
-    if (savedProgress) {
-        currentProgress = savedProgress;
-        console.log('Loaded progress from sessionStorage:', currentProgress);
-    } else {
-        resetCurrentProgress(); // Start fresh if no saved progress exists
-        console.log('Starting new game with fresh progress.');
-    }
-
-    // Continue with the existing logic to load the level and start the game
-    loadLevelContent(); 
-    updateHearts();
-    sessionStorage.setItem('sessionSave', 'true');
-});
-
-
 window.addEventListener('beforeunload', () => {
     saveProgress();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadLevelContent(); 
-    sessionStorage.setItem('sessionSave', 'true');
 });
 
 function resetGame() {
@@ -226,10 +198,6 @@ function loadEnemyImage() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadEnemyImage();
-});
-
 function loadBackgroundImage() {
     const upperSection = document.querySelector('.upper-section');
     const level = levels[currentProgress.currentLevel - 1];
@@ -259,19 +227,10 @@ function loadLevelContent() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadLevelContent();
-});
-
 function togglePauseModal() {
     const modal = document.getElementById('pauseModal');
     modal.style.display = modal.style.display === "none" || modal.style.display === "" ? "flex" : "none";
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('pauseModal');
-    modal.style.display = 'none';
-});
 
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
@@ -290,6 +249,28 @@ document.getElementById('returnToMenu').addEventListener('click', function() {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if there's saved progress in sessionStorage
+    const savedProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
+    if (savedProgress) {
+        currentProgress = savedProgress;
+        console.log('Loaded progress from sessionStorage:', currentProgress);
+    } else {
+        resetCurrentProgress(); // Start fresh if no saved progress exists
+        console.log('Starting new game with fresh progress.');
+    }
+
+    // Load level content and hearts
+    loadLevelContent(); 
+    updateHearts();
+    sessionStorage.setItem('sessionSave', 'true');
+
+    // Load the enemy image
+    loadEnemyImage();
+
+    // Load the background image
+    loadBackgroundImage();
+
+    // Initialize the keyboard
     const row1 = document.getElementById('row1');
     const row2 = document.getElementById('row2');
     const row3 = document.getElementById('row3');
@@ -329,4 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
     createKeyboardRow(row1, row1Letters);
     createKeyboardRow(row2, row2Letters);
     createKeyboardRow(row3, row3Letters);
+
+    // Initialize the pause modal
+    const modal = document.getElementById('pauseModal');
+    modal.style.display = 'none';
 });
+

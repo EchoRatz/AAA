@@ -58,61 +58,82 @@ function updateHearts() {
     }
 }
 
+
 function checkGuess() {
     const row = grid.children[currentRow];
     let guessedWord = '';
+    let flipPromises = [];
+
     for (let i = 0; i < 5; i++) {
         guessedWord += row.children[i].textContent;
+        flipPromises.push(flipCell(row.children[i], i));
     }
 
-    for (let i = 0; i < 5; i++) {
-        const letter = row.children[i].textContent;
-        if (letter === wordAnswer[i]) {
-            row.children[i].style.backgroundColor = '#538d4e';
-        } else if (wordAnswer.includes(letter)) {
-            row.children[i].style.backgroundColor = '#b59f3b';
-        } else {
-            row.children[i].style.backgroundColor = 'gray';
-        }
-    }
+    Promise.all(flipPromises).then(() => {
+        if (guessedWord === wordAnswer) {
+            currentProgress.currentEnemyHealth -= stat.attackDmg;
 
-    if (guessedWord === wordAnswer) {
-        currentProgress.currentEnemyHealth -= stat.attackDmg;
-
-        if (currentProgress.currentEnemyHealth <= 0) {
-            currentProgress.currentEnemy++;
-            if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
-                currentProgress.currentLevel++;
-                currentProgress.currentEnemy = 1; 
+            if (currentProgress.currentEnemyHealth <= 0) {
+                currentProgress.currentEnemy++;
+                if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
+                    currentProgress.currentLevel++;
+                    currentProgress.currentEnemy = 1; 
+                }
+                loadLevelContent();
             }
-            loadLevelContent();
-        }
 
-        setTimeout(() => {
-            alert("Congratulations! You've guessed the word!");
-            achievement.wins += 1;
-            localStorage.setItem('achievement', JSON.stringify(achievement));
-            testShowstat();
-            resetGame();
-            saveProgress();
-        }, 300);
-    } else if (currentRow < 5) {
-        currentRow++;
-        currentCol = 0;
-    } else {
-        alert("Game Over! The word was: " + wordAnswer);
-        currentProgress.remainingLives -= 1;
-        updateHearts();
-        testShowstat();
-        if (currentProgress.remainingLives > 0) {
-            resetGame();
+            setTimeout(() => {
+                alert("Congratulations! You've guessed the word!");
+                achievement.wins += 1;
+                localStorage.setItem('achievement', JSON.stringify(achievement));
+                testShowstat();
+                resetGame();
+                saveProgress();
+            }, 300);
+        } else if (currentRow < 5) {
+            currentRow++;
+            currentCol = 0;
         } else {
-            alert("You've lost all lives. Progress is reset.");
-            resetCurrentProgress();
-            resetGame();
+            alert("Game Over! The word was: " + wordAnswer);
+            currentProgress.remainingLives -= 1;
+            updateHearts();
+            testShowstat();
+            if (currentProgress.remainingLives > 0) {
+                resetGame();
+            } else {
+                alert("You've lost all lives. Progress is reset.");
+                resetCurrentProgress();
+                resetGame();
+            }
+            saveProgress();
         }
-        saveProgress();
-    }
+    });
+}
+
+function flipCell(cell, index) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            cell.classList.add('flip');
+
+            setTimeout(() => {
+                // This will execute at the 50% mark of the flip animation
+                const letter = cell.textContent;
+                if (letter === wordAnswer[index]) {
+                    cell.style.backgroundColor = '#538d4e';
+                } else if (wordAnswer.includes(letter)) {
+                    cell.style.backgroundColor = '#b59f3b';
+                } else {
+                    cell.style.backgroundColor = 'gray';
+                }
+
+                // Add a small delay to synchronize the text update smoothly with the animation
+                setTimeout(() => {
+                    cell.classList.remove('flip');
+                    resolve();
+                }, 100); // Ensure this delay fits your animation timing
+            }, 400); // Half of the animation duration (0.8s)
+        }, index * 150); // Slightly increased stagger for better effect
+    });
 }
 
 function resetCurrentProgress() {

@@ -157,7 +157,7 @@ function saveProgress() {
 function saveProgressToLocalStorage() {
     const progress = JSON.parse(sessionStorage.getItem('currentProgress'));
     if (progress) {
-        localStorage.setItem('saveProgress', JSON.stringify(progress));
+        localStorage.setItem('saveProgress', JSON.stringify(progress)); // Save using correct key
         console.log('Progress saved to localStorage:', progress);
     } else {
         console.log('No progress found in sessionStorage to save.');

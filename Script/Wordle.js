@@ -72,6 +72,7 @@ function checkGuess() {
     Promise.all(flipPromises).then(() => {
         if (guessedWord === wordAnswer) {
             currentProgress.currentEnemyHealth -= stat.attackDmg;
+            console.log(`Enemy current health: ${currentProgress.currentEnemyHealth}`);
 
             if (currentProgress.currentEnemyHealth <= 0) {
                 currentProgress.currentEnemy++;

@@ -21,12 +21,23 @@
         <div class="popup" id="popup">
             <button id="CloseTutorialButton" class="okButton button" onclick="closePopup()">OK</button>
         </div>
+        
+        <!-- Background Music -->
+        <audio id=MenuMusic" autoplay loop>
+            <source src="./audio/Menu.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <!-- Sound Effects -->
+        <audio id="ClickEffect">
+            <source src="./audio/ClickEffect.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
 
     </div>
 
-    <script src="Framework/js/bootstrap.min.js"></script>
-    <script src="Script/Wordle.js"></script>
-    <script src="Script/Main.js"></script>
-    <!--<script src="Script/CutScene.js"></script>-->
+    <script src="./Framework/js/bootstrap.min.js"></script>
+    <script src="./Script/Wordle.js"></script>
+    <script src="./Script/Main.js"></script>
+    <script src="./Script/mainSound.js"></script>
 </body>
 </html>

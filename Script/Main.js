@@ -1,3 +1,14 @@
+ // Popup handling functions
+ let popup = document.getElementById("popup");
+
+ function openPopup() {
+     popup.classList.add("open-popup");
+ }
+
+ function closePopup() {
+     popup.classList.remove("open-popup");
+ }
+
 document.addEventListener('DOMContentLoaded', () => {
   const startGameButton = document.getElementById('startButton');
   const loadGameButton = document.getElementById('loadButton');

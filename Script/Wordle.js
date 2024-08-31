@@ -58,6 +58,10 @@ function updateHearts() {
     }
 }
 
+function updateStageIndicator() {
+    const stageIndicator = document.getElementById('stageIndicator');
+    stageIndicator.textContent = `Stage: ${currentProgress.currentLevel}-${currentProgress.currentEnemy}`;
+}
 
 function checkGuess() {
     const row = grid.children[currentRow];
@@ -81,6 +85,7 @@ function checkGuess() {
                     currentProgress.currentLevel++;
                     currentProgress.currentEnemy = 1; 
                 }
+                updateStageIndicator();
                 loadLevelContent();
             }
 
@@ -291,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Load level content and hearts
     loadLevelContent(); 
+    updateStageIndicator();
     updateHearts();
     sessionStorage.setItem('sessionSave', 'true');
 

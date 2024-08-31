@@ -179,13 +179,22 @@ body, html {
 .heart-container {
     display: flex;
     align-items: center;
-    margin-left: 25px;
+    margin-left: 100px;
     gap: 5px; /* Space between hearts */
 }
 
 .heart-container img {
-    width: 30px; /* Adjust the size as needed */
-    height: 30px;
+    width: 40px; /* Adjust the size as needed */
+    height: 40px;
+}
+
+.stage-indicator {
+    font-size: 18px;
+    color: #ffffff; /* White text */
+    padding: 10px 40px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .modal {

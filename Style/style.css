@@ -6,6 +6,14 @@ body{
     background-position: center top;
 }
 
+@font-face {
+    font-family: 'RockSalt';
+    src: url('./source/Fonts/RockSalt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 .container {
     width: 500px;
     height: 300px;
@@ -45,7 +53,7 @@ body{
 
     color: #fff; /* Change text color */
     background-color: #635935; /* Change background color */
-    font-family: Arial, sans-serif; /* Change font family */
+    font-family: 'RockSalt', Arial, sans-serif; /* Change font family */
     font-weight: bold; /* Apply bold font weight */
 }
 

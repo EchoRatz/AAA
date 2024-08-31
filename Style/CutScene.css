@@ -12,6 +12,14 @@ body {
     background-position: left center; /* Align the image to the left side */
     background-repeat: no-repeat; /* Prevent the background from repeating */
   }
+
+  @font-face {
+    font-family: 'Caveat';
+    src: url(./source/Fonts/Caveat-VariableFont_wght.ttf) format('truetype');
+    font-weight: 400;
+    font-style:  normal;
+    font-display: swap;
+  }
   
   #game-container {
     width: 100%;
@@ -62,20 +70,22 @@ body {
     padding: 0;
     line-height: 1.5;
     max-height: 100%; /* Ensure text doesn't overflow the container */
-    overflow-y: auto; /* Adds a vertical scroll if content exceeds the fixed height */
-    font-size: 25px;
+    overflow-y: hidden; /* Adds a vertical scroll if content exceeds the fixed height */
+    font-size: 30px;
+    font-family: 'Caveat', cursive; /* Use custom font for dialogue text */
   }
   
   #character-name {
     position: absolute; /* Position it within the container */
-    top: 60px; /* Adjust as necessary to position above the dialogue */
-    left: 20%; /* Center it horizontally */
+    top: 50px; /* Adjust as necessary to position above the dialogue */
+    left: 21%; /* Center it horizontally */
     transform: translateX(-50%); /* Center it */
     padding: 5px 10px;
     color: white; /* Text color */
     font-weight: bold; /* Make the text bold */
     text-align: center;
-    font-size: 40px; /* Slightly larger font for emphasis */
+    font-family: 'Caveat', sans-serif; /* Use custom font for character name */
+    font-size: 50px; /* Slightly larger font for emphasis */
   }
   
   @keyframes vibrate {

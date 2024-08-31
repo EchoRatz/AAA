@@ -8,6 +8,22 @@ body, html {
     flex-direction: column;
 }
 
+@font-face {
+    font-family: 'Libre Baskeville';
+    src: url(./source/Fonts/LibreBaskerville-Regular.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Libre Baskeville - Bold';
+    src: url(./source/Fonts/LibreBaskerville-Bold.ttf) format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 .wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
@@ -37,6 +53,7 @@ body, html {
     font-weight: bold;
     color: aliceblue;
     text-transform: uppercase;
+    font-family: 'Libre Baskeville', sans-serif;
 }
 
 .wordle-cell.flip {
@@ -216,6 +233,7 @@ body, html {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    font-family: 'Libre Baskeville - Bold', sans-serif;
     text-transform: uppercase;
     transition: background-color 0.3s, color 0.3s;
   }

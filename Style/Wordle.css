@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     height: 100%;
     overflow: hidden; /* Prevent scrolling */
-    background-color: rgb(0, 0, 0, 0.8);
+    background-color: rgb(0 , 0, 0, 0.8);
     display: flex;
     flex-direction: column;
 }
@@ -88,6 +88,8 @@ body, html {
     justify-content: space-between;
     background-color: green; 
     width: 100%;
+    
+    position: relative;
 
     padding: 0 50px;
 }
@@ -125,6 +127,26 @@ body, html {
     background-color: transparent;
 }
 
+.health-bar-container {
+    position: absolute;
+    top: -20px; /* Position above the enemy image */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Width relative to the enemy image */
+    height: 15px;
+    background-color: #555; /* Dark background for the health bar container */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.health-bar {
+    height: 100%;
+    background-color: #ff0000; /* Red color for the health */
+    width: 100%; /* Full health initially */
+    border-radius: 10px 0 0 10px;
+    transition: width 0.3s ease; /* Smooth transition for health changes */
+}
+
 .lower-section {
     height: 50%; /* Take up 50% of the remaining space */
     display: flex;
@@ -146,11 +168,7 @@ body, html {
     right: 0px;
     z-index: 100;
 
-    background: rgb(0, 0, 0, 0.8);
-
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: rgb(228, 228, 228);
+    background-color: transparent;
 }
 
 .left-section{

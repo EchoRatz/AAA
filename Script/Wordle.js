@@ -72,6 +72,7 @@ function checkGuess() {
     Promise.all(flipPromises).then(() => {
         if (guessedWord === wordAnswer) {
             currentProgress.currentEnemyHealth -= stat.attackDmg;
+            updateHealthBar();
             console.log(`Enemy health: ${currentProgress.currentEnemyHealth}`);
 
             if (currentProgress.currentEnemyHealth <= 0) {
@@ -167,6 +168,7 @@ function saveProgressToLocalStorage() {
 
 // Add an event listener to the "Save" button
 document.getElementById('saveGame').addEventListener('click', () => {
+    alert(`progress have been saved`);
     saveProgressToLocalStorage(); // Save the current progress to localStorage
 });
 
@@ -235,6 +237,13 @@ function loadBackgroundImage() {
     }
 }
 
+function updateHealthBar() {
+    const healthBar = document.querySelector('.js-health-bar');
+    const enemy = levels[currentProgress.currentLevel - 1].enemies[currentProgress.currentEnemy - 1];
+    const healthPercentage = (currentProgress.currentEnemyHealth / enemy.health) * 100;
+    healthBar.style.width = `${healthPercentage}%`;
+}
+
 function loadLevelContent() {
     loadBackgroundImage();
     loadEnemyImage();
@@ -244,6 +253,7 @@ function loadLevelContent() {
         if (level && level.enemies.length >= currentProgress.currentEnemy) {
             const enemy = level.enemies[currentProgress.currentEnemy - 1];
             currentProgress.currentEnemyHealth = enemy.health;
+            updateHealthBar();
             console.log(`Loaded enemy: ${enemy.type} with health: ${currentProgress.currentEnemyHealth}`);
         }
     }
@@ -266,21 +276,19 @@ document.getElementById('continueGame').addEventListener('click', function() {
 
 document.getElementById('returnToMenu').addEventListener('click', function() {
     sessionStorage.removeItem('currentProgress');
-    sessionStorage.removeItem('sessionSave');
+    //sessionStorage.removeItem('sessionSave');
     window.location.href = "index.html";
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check if there's saved progress in sessionStorage
-    const savedProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
-    if (savedProgress) {
-        currentProgress = savedProgress;
+    if (sessionStorage.getItem('currentProgress')) {
+        currentProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
         console.log('Loaded progress from sessionStorage:', currentProgress);
     } else {
-        resetCurrentProgress(); // Start fresh if no saved progress exists
+        resetCurrentProgress(); // Start fresh if no progress exists in sessionStorage
         console.log('Starting new game with fresh progress.');
     }
-
     // Load level content and hearts
     loadLevelContent(); 
     updateHearts();

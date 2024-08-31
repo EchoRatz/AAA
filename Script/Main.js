@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (startGameButton) {
       startGameButton.addEventListener('click', (event) => {
           event.preventDefault();
-          sessionStorage.clear();
-          localStorage.removeItem('gameSaveProgress');
+          
+          sessionStorage.removeItem('currentProgress');
+          localStorage.removeItem('saveProgress');
+
           setTimeout(() => {
               window.location.href = 'Cutscene.html';
           }, 200);

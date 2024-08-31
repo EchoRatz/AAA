@@ -110,6 +110,26 @@ body, html {
     background-color: transparent;
 }
 
+.health-bar-container {
+    position: absolute;
+    top: -20px; /* Position above the enemy image */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Width relative to the enemy image */
+    height: 15px;
+    background-color: #555; /* Dark background for the health bar container */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.health-bar {
+    height: 100%;
+    background-color: #ff0000; /* Red color for the health */
+    width: 100%; /* Full health initially */
+    border-radius: 10px 0 0 10px;
+    transition: width 0.3s ease; /* Smooth transition for health changes */
+}
+
 .lower-section {
     height: 50%; /* Take up 50% of the remaining space */
     display: flex;

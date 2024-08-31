@@ -72,6 +72,7 @@ function checkGuess() {
     Promise.all(flipPromises).then(() => {
         if (guessedWord === wordAnswer) {
             currentProgress.currentEnemyHealth -= stat.attackDmg;
+            updateHealthBar();
             console.log(`Enemy health: ${currentProgress.currentEnemyHealth}`);
 
             if (currentProgress.currentEnemyHealth <= 0) {
@@ -236,6 +237,13 @@ function loadBackgroundImage() {
     }
 }
 
+function updateHealthBar() {
+    const healthBar = document.querySelector('.js-health-bar');
+    const enemy = levels[currentProgress.currentLevel - 1].enemies[currentProgress.currentEnemy - 1];
+    const healthPercentage = (currentProgress.currentEnemyHealth / enemy.health) * 100;
+    healthBar.style.width = `${healthPercentage}%`;
+}
+
 function loadLevelContent() {
     loadBackgroundImage();
     loadEnemyImage();
@@ -245,6 +253,7 @@ function loadLevelContent() {
         if (level && level.enemies.length >= currentProgress.currentEnemy) {
             const enemy = level.enemies[currentProgress.currentEnemy - 1];
             currentProgress.currentEnemyHealth = enemy.health;
+            updateHealthBar();
             console.log(`Loaded enemy: ${enemy.type} with health: ${currentProgress.currentEnemyHealth}`);
         }
     }

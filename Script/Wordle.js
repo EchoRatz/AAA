@@ -167,6 +167,7 @@ function saveProgressToLocalStorage() {
 
 // Add an event listener to the "Save" button
 document.getElementById('saveGame').addEventListener('click', () => {
+    alert(`progress have been saved`);
     saveProgressToLocalStorage(); // Save the current progress to localStorage
 });
 
@@ -266,21 +267,19 @@ document.getElementById('continueGame').addEventListener('click', function() {
 
 document.getElementById('returnToMenu').addEventListener('click', function() {
     sessionStorage.removeItem('currentProgress');
-    sessionStorage.removeItem('sessionSave');
+    //sessionStorage.removeItem('sessionSave');
     window.location.href = "index.html";
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check if there's saved progress in sessionStorage
-    const savedProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
-    if (savedProgress) {
-        currentProgress = savedProgress;
+    if (sessionStorage.getItem('currentProgress')) {
+        currentProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
         console.log('Loaded progress from sessionStorage:', currentProgress);
     } else {
-        resetCurrentProgress(); // Start fresh if no saved progress exists
+        resetCurrentProgress(); // Start fresh if no progress exists in sessionStorage
         console.log('Starting new game with fresh progress.');
     }
-
     // Load level content and hearts
     loadLevelContent(); 
     updateHearts();

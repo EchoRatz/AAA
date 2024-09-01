@@ -4,18 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel = "stylesheet" href = "Framework/css/bootstrap.min.css">
-    <link rel = "stylesheet" type = "text/css" href = "Style/style.css">
+    <link rel="stylesheet" href="Framework/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Style/style.css">
     <title>AAA Game</title>
 </head>
 <body>
 
-    <div class = "container glass">
-        <a href="Wordle.html">
-            <button class = "btn btn-outline-light playButton">Play Game</button>
-        </a>
+    <div class="container glass">
+        <a href="Cutscene.html" id="start-game-link">
+            <button id = "startButton" class="btn btn-outline-light playButton">New Game</button>
+        </a> <!--Have change Id name case-->
+
+        <button id = "loadButton" class="btn btn-outline-light LoadButton">Resume</button>
+
+        <button id="OpenTutorialButton" class="btn btn-outline-light howToPlayButton" onclick="openPopup()">How To Play</button>
+        <div class="popup" id="popup">
+            <button id="CloseTutorialButton" class="okButton button" onclick="closePopup()">OK</button>
+        </div>
+        
+        <!-- Background Music -->
+        <audio id=MenuMusic" preload="auto" autoplay loop>
+            <source src="./audio/Menu.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <!-- Sound Effects -->
+        <audio id="ClickEffect">
+            <source src="./audio/ClickEffect.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
     </div>
-    <script src = "Framework/js/bootstrap.min.js"></script>
-    <script src = "Script/Main.js"></script>
+
+    <script src="./Framework/js/bootstrap.min.js"></script>
+    <script src="./Script/Wordle.js"></script>
+    <script src="./Script/Main.js"></script>
+    <script src="./Script/mainSound.js"></script>
 </body>
 </html>

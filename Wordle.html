@@ -10,77 +10,135 @@
 </head>
 <body>
 
-    <div class = "header">
+    <div id="timer" class="timer">Time Elapsed: 00:00</div>
 
-        <div class = "left-section">
-            <a href="index.html">
-                <button class = "btn btn-light returnButton">Return to lobby</button>
-            </a>
-        </div>
+    <div id = "keyboard-container">
+        <div class="keyboard-row" id="row1"></div>
+        <div class="keyboard-row" id="row2"></div>
+        <div class="keyboard-row" id="row3"></div>
+    </div>
+
+    <div class = "main-container">
+
+        <div class = "upper-section">
+
+            <div class = "header">
+
+                <div class = "left-section">
         
-        <div class = "middle-section">
+                    <div class = "heart-container js-heart-container">
+                        
+                    </div>
+
+                </div>
+                
+                <div class = "middle-section">
+                    
+                </div>
+        
+                <div class = "right-section">
+                    <div id="stageIndicator" class="stage-indicator">Stage: 1-1</div>
+                </div>
+        
+            </div>
+
+            <div class = "main-character">
+                <img src = "Style/source/Yoda.png" alt = "main-character Image" class = "MC-image js-MC-image">
+            </div>
+
+            <div class = "Enemy">
+                <img src = "" alt = "Enemy Image" class = "Enemy-image js-enemy-image">
+                
+                <div class="health-bar-container">
+                    <div class="health-bar js-health-bar"></div>
+                </div>
+            </div>
+
+        </div>
+    
+    
             
+        <div class = "lower-section">
+            <div class = "wordle-grid">
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+            </div>
         </div>
 
-        <div class = "right-section">
-           
+        <div id="showDamageModal" class="attackModal">
+            <div class="modal-content">
+                <h4 id = "damageValue ">You have deal 50 damage to dinosaur</h4>
+
+            </div>
+        </div>
+
+        <div id="pauseModal" class="modal">
+            <div class="modal-content">
+                <h2>Paused</h2>
+                <button id="continueGame" class="btn btn-primary">Continue</button>
+                <button id="returnToMenu" class="btn btn-light">Return to Menu</button>
+                <button id="saveGame" class="btn btn-light">Save</button>
+                <button id="resetStat" class="btn btn-light">Reset stat</button> 
+            </div>
         </div>
 
     </div>
-   
 
-    <div class = "wordle-grid">
+    <audio id = "GameMusic" src = "./audio/Game.mp3" preload = "auto" autoplay loop></audio>
+    
+    <div id="pause-message">Press ESC to pause</div>
 
-        <div class = "wordle-row">
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-        </div>
-
-        <div class = "wordle-row">
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-        </div>
-
-        <div class = "wordle-row">
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-        </div>
-
-        <div class = "wordle-row">
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-        </div>
-
-        <div class = "wordle-row">
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-        </div>
-
-        <div class = "wordle-row">
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-            <div class = "wordle-cell"></div>
-        </div>
-    </div>
-
-    <script src = "Script/dictionary.js" type = "module"></script>
-    <script src = "Script/Wordle.js" type = "module"></script>
+    <script src = "./Script/dictionary.js"></script>
+    <script src = "./Script/Main.js"></script>
+    <script src = "./Script/levels.js"></script>
+    <script src = "./Script/Wordle.js"></script>
+    <script src = "./Script/mainSound.js"></script>
+    
 </body>
 </html>

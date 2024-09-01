@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dialogue System</title>
+  <link rel="stylesheet" href="./Style/CutScene.css">
+
+ <!-- Prefetch the next HTML page -->
+  <link rel="prefetch" href="Wordle.html">
+
+  <!-- Preload key assets for the next page -->
+  <link rel="preload" href="./Style/Wordle.css" as="style">
+  <link rel="preload" href="./Script/Wordle.js" as="script">
+  <link rel="preload" href="./Framework/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="./Script/dictionary.js" as="script">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background will be set with CSS -->
+    
+        <!-- Dialogue Box -->
+        <div id="dialogue-box">
+            <img id="portrait" src = "" alt="Character Portrait">
+            <div id="character-name" class="character-name"></div>
+          <div id="dialogue-content">
+            <div id="text-box">
+              <p id="text-content"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <audio id = "CutsceneMusic" src="./audio/CutScene.mp3" preload="auto" loop></audio>
+
+      <script src = "./Script/CutScene.js"></script>
+      <script src = "./Script/mainSound.js"></script>
+</body>
+</html>

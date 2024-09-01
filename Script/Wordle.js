@@ -79,6 +79,8 @@ function checkGuess() {
             updateHealthBar();
             console.log(`Enemy health: ${currentProgress.currentEnemyHealth}`);
 
+            showDamageModal();
+
             if (currentProgress.currentEnemyHealth <= 0) {
                 currentProgress.currentEnemy++;
                 if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
@@ -90,7 +92,8 @@ function checkGuess() {
             }
 
             setTimeout(() => {
-                alert(`You have deal ${stat.attackDmg} damage to dinosaur`);
+                //alert(`You have deal ${stat.attackDmg} damage to dinosaur`);
+                //showDamageModal();
                 achievement.wins += 1;
                 localStorage.setItem('achievement', JSON.stringify(achievement));
                 testShowstat();
@@ -286,6 +289,16 @@ document.getElementById('returnToMenu').addEventListener('click', function() {
     window.location.href = "index.html";
 });
 
+function showDamageModal() {
+    const damageModal = document.getElementById('showDamageModal');
+ 
+    damageModal.style.display = 'flex'; // Show the modal
+
+    setTimeout(() => {
+        damageModal.style.display = 'none'; // Hide the modal after 1 second
+    }, 1000); // 1 second = 1000 milliseconds
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Check if there's saved progress in sessionStorage
     if (sessionStorage.getItem('currentProgress')) {
@@ -351,5 +364,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the pause modal
     const modal = document.getElementById('pauseModal');
     modal.style.display = 'none';
+
+    const showDamageModalmodal = document.getElementById('showDamageModal');
+    const damageValue = document.getElementById('damageValue');
+    showDamageModalmodal.style.display = 'none';
 });
 

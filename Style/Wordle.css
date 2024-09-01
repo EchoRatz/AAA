@@ -211,6 +211,21 @@ body, html {
     align-items: center;
 }
 
+.attackModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 200px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .modal-content {
     background-color: #fefefe;
     padding: 20px;

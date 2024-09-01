@@ -90,7 +90,7 @@ function checkGuess() {
             }
 
             setTimeout(() => {
-                alert("Congratulations! You've guessed the word!");
+                alert(`You have deal ${stat.attackDmg} damage to dinosaur`);
                 achievement.wins += 1;
                 localStorage.setItem('achievement', JSON.stringify(achievement));
                 testShowstat();
@@ -101,7 +101,8 @@ function checkGuess() {
             currentRow++;
             currentCol = 0;
         } else {
-            alert("Game Over! The word was: " + wordAnswer);
+            //alert("Game Over! The word was: " + wordAnswer);
+            
             currentProgress.remainingLives -= 1;
             updateHearts();
             testShowstat();
@@ -281,7 +282,7 @@ document.getElementById('continueGame').addEventListener('click', function() {
 
 document.getElementById('returnToMenu').addEventListener('click', function() {
     sessionStorage.removeItem('currentProgress');
-    //sessionStorage.removeItem('sessionSave');
+    sessionStorage.removeItem('sessionSave');
     window.location.href = "index.html";
 });
 

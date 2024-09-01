@@ -4,20 +4,20 @@ const level1 = {
     background: "Style/source/Background.png",
     enemies: [
         {
-            type: "Vader",
+            type: "ijo",
             health: 100,
-            image: "Style/source/Enemy/vader.png"
+            image: "Style/source/Dino/ijo.png"
         },
         {
-            type: "troll",
+            type: "merah",
             health: 200,
-            image: "Style/source/Enemy/Troll.png"
+            image: "Style/source/Dino/merah.jpg"
             // Add image paths if needed
         },
         {
-            type: "dragon",
+            type: "kuning",
             health: 500,
-            image: "Style/source/Enemy/Dragon.png"
+            image: "Style/source/Dino/kuning.png"
             // Add image paths if needed
         }
     ],

@@ -79,7 +79,7 @@ function checkGuess() {
             updateHealthBar();
             console.log(`Enemy health: ${currentProgress.currentEnemyHealth}`);
 
-            showDamageModal();
+            showDamageModal(stat.attackDmg);
 
             if (currentProgress.currentEnemyHealth <= 0) {
                 currentProgress.currentEnemy++;
@@ -289,9 +289,11 @@ document.getElementById('returnToMenu').addEventListener('click', function() {
     window.location.href = "index.html";
 });
 
-function showDamageModal() {
+function showDamageModal(damage) {
     const damageModal = document.getElementById('showDamageModal');
- 
+    const damageValue = document.getElementById('damageValue');
+
+    damageValue.textContent = `You deal ${damage} to enemy`; // Update the modal content with the damage value
     damageModal.style.display = 'flex'; // Show the modal
 
     setTimeout(() => {

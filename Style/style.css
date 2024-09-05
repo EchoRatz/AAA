@@ -16,7 +16,7 @@ body{
 
 .container {
     width: 500px;
-    height: 300px;
+    height: 500px;
     margin: 250px auto;
 
     display: flex;
@@ -41,7 +41,7 @@ body{
     z-index: -1; /* Move the glass box behind the buttons */
 }
 
-.playButton, .howToPlayButton, .LoadButton{
+.playButton, .howToPlayButton, .LoadButton, .trainingModeButton{
     height: 100px;
     width: 200px;
     font-size: 25px;

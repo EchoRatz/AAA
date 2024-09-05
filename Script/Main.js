@@ -12,22 +12,23 @@
 document.addEventListener('DOMContentLoaded', () => {
   const startGameButton = document.getElementById('startButton');
   const loadGameButton = document.getElementById('loadButton');
+  const trainingGameButton = document.getElementById('trainingButton');
   
-  if (startGameButton) {
-      startGameButton.addEventListener('click', (event) => {
-          event.preventDefault();
+    if (startGameButton) {
+        startGameButton.addEventListener('click', (event) => {
+            event.preventDefault();
           
-          sessionStorage.removeItem('currentProgress');
-          localStorage.removeItem('saveProgress');
+            sessionStorage.removeItem('currentProgress');
+            localStorage.removeItem('saveProgress');
 
-          setTimeout(() => {
-              window.location.href = 'Cutscene.html';
-          }, 200);
-      });
-  }
+            setTimeout(() => {
+                window.location.href = 'Cutscene.html';
+            }, 200);
+        });
+    }
   
-  if (loadGameButton) {
-    loadGameButton.addEventListener('click', (event) => {
+    if (loadGameButton) {
+        loadGameButton.addEventListener('click', (event) => {
         event.preventDefault();
         const savedProgress = localStorage.getItem('saveProgress'); // Retrieve using correct key
         if (savedProgress) {
@@ -39,8 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Alert if no saved progress is found
             alert("No saved game progress found.");
         }
-    });
-}
+        });
+    }
+
+    if (trainingGameButton) {
+        trainingGameButton.addEventListener('click', () => {
+            window.location.href = 'trainingMode.html';
+        })
+    }
 });
 
 

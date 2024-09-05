@@ -17,7 +17,7 @@
         <div class="keyboard-row" id="row2"></div>
         <div class="keyboard-row" id="row3"></div>
     </div>
-
+    
     <div class = "main-container">
 
         <div class = "upper-section">
@@ -59,8 +59,8 @@
     
             
         <div class = "lower-section">
+            
             <div class = "wordle-grid">
-        
                 <div class = "wordle-row">
                     <div class = "wordle-cell"></div>
                     <div class = "wordle-cell"></div>
@@ -109,6 +109,7 @@
                     <div class = "wordle-cell"></div>
                 </div>
             </div>
+            <button id = "playAudioButton" class = "Audio">Play Audio</button>
         </div>
 
         <div id="showDamageModal" class="attackModal">
@@ -117,7 +118,7 @@
 
             </div>
         </div>
-
+        
         <div id="pauseModal" class="modal">
             <div class="modal-content">
                 <h2>Paused</h2>
@@ -129,8 +130,8 @@
         </div>
 
     </div>
-
-    <audio id = "GameMusic" src = "./audio/Game.mp3" preload = "auto" autoplay loop></audio>
+    
+    <audio id = "GameMusic" src = "./audio/Game.mp3"></audio>
     
     <div id="pause-message">Press ESC to pause</div>
 
@@ -138,7 +139,28 @@
     <script src = "./Script/Main.js"></script>
     <script src = "./Script/levels.js"></script>
     <script src = "./Script/Wordle.js"></script>
-    <script src = "./Script/mainSound.js"></script>
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          console.log('DOM content loaded'); // Check that DOM is fully loaded
+      
+          const playButton = document.getElementById('playAudioButton');
+          if (playButton) {
+            console.log('Play button found'); // Confirm the button is found
+            playButton.addEventListener('click', () => {
+              console.log('Play button clicked'); // Log when button is clicked
+              const sound = document.getElementById('GameMusic');
+              if (sound) {
+                sound.play().catch(error => console.error('Audio play error:', error));
+              } else {
+                console.error('Audio element not found');
+              }
+            });
+          } else {
+            console.error('Play button not found');
+          }
+        });
+      </script>
+
 </body>
 </html>

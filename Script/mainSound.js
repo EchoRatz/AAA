@@ -1,55 +1,66 @@
-// Function to play a sound effect
+// Existing function to play sound remains mostly unchanged
 function playSound(soundId) {
-    const sound = document.getElementById(soundId);
-    if (sound) {
+  const sound = document.getElementById(soundId);
+  if (sound) {
+    // Check if audio is loaded
+    if (sound.readyState >= 3) { // HAVE_FUTURE_DATA or more
       sound.currentTime = 0; // Reset sound to start
       sound.play().catch(error => {
         console.error(`Error playing sound: ${soundId}`, error);
       });
     } else {
-      console.error(`Sound element with ID ${soundId} not found`);
+      // If audio is not ready, load it first and then play
+      sound.addEventListener('canplaythrough', () => {
+        sound.currentTime = 0; // Reset sound to start
+        sound.play().catch(error => {
+          console.error(`Error playing sound after load: ${soundId}`, error);
+        });
+      });
+      sound.load();
     }
+  } else {
+    console.error(`Sound element with ID ${soundId} not found`);
+  }
+}
+
+// Initialize audio controls based on the current HTML page
+function initializeAudio() {
+  const page = window.location.pathname.split('/').pop(); // Get the current page name
+  let backgroundMusicId;
+
+  // Determine which music to play based on the current HTML file
+  switch (page) {
+    case 'index.html':
+      backgroundMusicId = 'MenuMusic';
+      break;
+    case 'Wordle.html':
+      backgroundMusicId = 'GameMusic';
+      break;
+    case 'Cutscene.html':
+      backgroundMusicId = 'CutsceneMusic';
+      break;
+    // Add more cases as needed
+    default:
+      backgroundMusicId = null; // No music by default
+      break;
   }
 
-// Function to initialize audio controls based on the current HTML page
-function initializeAudio() {
-    const page = window.location.pathname.split('/').pop(); // Get the current page name
-    let backgroundMusicId;
-  
-    // Determine which music to play based on the current HTML file
-    switch (page) {
-      case 'index.html':
-        backgroundMusicId = 'MenuMusic';
-        break;
-      case 'Wordle.html':
-        backgroundMusicId = 'GameMusic';
-        break;
-      case 'Cutscene.html':
-        backgroundMusicId = 'CutsceneMusic';
-        break;
-      // Add more cases as needed
-      default:
-        console.warn('No specific background music defined for this page');
-      return; // Exit if no specific music for the page
+  // If there is a valid background music ID, set up the play button
+  if (backgroundMusicId) {
+    const playButton = document.getElementById('playAudioButton');
+    if (playButton) {
+      playButton.addEventListener('click', () => {
+        console.log('Play button clicked');
+        playSound(backgroundMusicId);
+      });
     }
-
- // Attempt to set up background music autoplay
- const backgroundMusic = document.getElementById(backgroundMusicId);
- if (backgroundMusic) {
-   backgroundMusic.volume = 0.3; // Set initial volume (optional)
-   backgroundMusic.play().catch(error => {
-     console.log('Background music autoplay prevented:', error);
-   });
- } else {
-   console.log(`Background music element with ID ${backgroundMusicId} not found`);
- }
+  }
+}
 
 // Add event listeners to all buttons for the click sound effect
 const buttons = document.querySelectorAll('button') // Select all buttons
 buttons.forEach(button => {
     button.addEventListener('click', () => playSound('ClickEffect'))
 })
-}
 
-// Call initializeAudio on page load
-window.addEventListener('DOMContentLoaded', initializeAudio);
+document.addEventListener('DOMContentLoaded', initializeAudio);

@@ -9,8 +9,10 @@
 </head>
 <body>
 
-    <div id="timer" class="timer">Time Elapsed: 00:00</div>
-    
+    <!-- <div id="timer" class="timer">Time Elapsed: 00:00</div> -->
+    <button id = "playAudioButton">Play Audio</button>
+    <a href="index.html"><button class="backtoMenu">Back to Menu</button></a>
+
     <div id="keyboard-container">
         <div class="keyboard-row" id="row1"></div>
         <div class="keyboard-row" id="row2"></div>
@@ -69,7 +71,10 @@
         </div>
     </div>
 
+    <audio src="./audio/Game.mp3"></audio>
     <script src="./Script/dictionary.js"></script>
     <script src="./Script/Wdtraining.js"></script>
+    <script src="./Script/mainSound.js"></script>
+    
 </body>
 </html>

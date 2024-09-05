@@ -33,6 +33,7 @@ function checkGuess() {
     Promise.all(flipPromises).then(() => {
         if (guessedWord === wordAnswer) {
             // Handle correct guess
+            alert(`Nice one`);
             console.log("Correct! Resetting the game...");
             setTimeout(resetGame, 2000); // Delay before resetting for feedback
         } else if (currentRow < 5) {
@@ -41,6 +42,7 @@ function checkGuess() {
         } else {
             // Handle game over
             console.log("Game over! Resetting the game...");
+            setTimeout(alert(`Correct word is ${wordAnswer}`), 500);
             setTimeout(resetGame, 2000); // Delay before resetting for feedback
         }
     });

@@ -39,7 +39,9 @@ function initializeAudio() {
     case 'Cutscene.html':
       backgroundMusicId = 'CutsceneMusic';
       break;
-    // Add more cases as needed
+    case 'trainingmode.html':
+      backgroundMusicId = 'GameMusic';
+      break;
     default:
       backgroundMusicId = null; // No music by default
       break;

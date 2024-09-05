@@ -147,6 +147,51 @@ function flipCell(cell, index) {
     });
 }
 
+// Get the hint button and hint display container
+const hintButton = document.querySelector('.hintButton');
+const hintShowContainer = document.querySelector('.hintShowContainer');
+
+// Store positions that have already been hinted
+let hintedPositions = [];
+
+// Function to generate and append a hint, avoiding duplicates
+function generateHint() {
+    // Get the current word answer (already defined in your script)
+    const word = wordAnswer.split(''); // Break the word into an array of letters
+
+    // Stop if all 6 hints have been generated (one for each character)
+    if (hintedPositions.length >= 6) {
+        return;  // Do nothing when all hints are already revealed
+    }
+
+    // Find unhinted positions
+    const unhintedPositions = word.map((_, index) => index).filter(index => !hintedPositions.includes(index));
+
+    // If there are no unhinted positions left, stop the function
+    if (unhintedPositions.length === 0) {
+        return;
+    }
+
+    // Randomly select an unhinted position
+    const randomIndex = Math.floor(Math.random() * unhintedPositions.length);
+    const position = unhintedPositions[randomIndex];
+    const letter = word[position];
+
+    // Add the position to the hintedPositions array
+    hintedPositions.push(position);
+
+    // Create a new div for the hint
+    const hintDiv = document.createElement('div');
+    hintDiv.classList.add('hint-box');
+    hintDiv.textContent = `${letter.toUpperCase()} is in position ${position + 1}`;
+    
+    // Append the hint div to the hintShowContainer
+    hintShowContainer.appendChild(hintDiv);
+}
+
+// Add event listener to the hint button to append a hint on click
+hintButton.addEventListener('click', generateHint);
+
 function resetCurrentProgress() {
     currentProgress = {
         currentLevel: 1,
@@ -193,6 +238,10 @@ function resetGame() {
             row.children[j].style.backgroundColor = '';
         }
     }
+
+    // Reset the hints
+    hintedPositions = []; // Clear the list of hinted positions
+    hintShowContainer.textContent = ''; // Clear the displayed hints
 
     currentRow = 0;
     currentCol = 0;

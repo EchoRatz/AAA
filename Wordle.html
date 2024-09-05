@@ -12,12 +12,6 @@
 
     <div id="timer" class="timer">Time Elapsed: 00:00</div>
 
-    <div id = "keyboard-container">
-        <div class="keyboard-row" id="row1"></div>
-        <div class="keyboard-row" id="row2"></div>
-        <div class="keyboard-row" id="row3"></div>
-    </div>
-    
     <div class = "main-container">
 
         <div class = "upper-section">
@@ -59,7 +53,13 @@
     
             
         <div class = "lower-section">
-            
+
+            <div id = "keyboard-container">
+                <div class="keyboard-row" id="row1"></div>
+                <div class="keyboard-row" id="row2"></div>
+                <div class="keyboard-row" id="row3"></div>
+            </div>
+
             <div class = "wordle-grid">
                 <div class = "wordle-row">
                     <div class = "wordle-cell"></div>
@@ -109,8 +109,24 @@
                     <div class = "wordle-cell"></div>
                 </div>
             </div>
-            <button id = "playAudioButton" class = "Audio">Play Audio</button>
-        </div>
+
+
+            <div class = "hintBox">
+                <div class = "hintButtonContainer">
+                    <button type = "button" class = "btn btn-outline-dark hintButton">
+                        <img src="Style/source/bulb.png" alt="icon" style="width: 30px; height: 30px; margin-right: 8px; margin-top: -10px;">
+                        <h4 style="display: inline; margin: 0;">Hint</h4>
+                    </button>
+
+                    <button id="playAudioButton" class="Audio btn btn-outline-dark"><h4>Play Audio</h4></button>
+                </div>
+                    
+                <div class = "hintShowContainer">
+                    <p></p>
+                </div>
+                </div>
+            
+            </div>
 
         <div id="showDamageModal" class="attackModal">
             <div class="modal-content">

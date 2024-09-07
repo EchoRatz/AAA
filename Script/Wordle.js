@@ -75,11 +75,43 @@ function checkGuess() {
 
     Promise.all(flipPromises).then(() => {
         if (guessedWord === wordAnswer) {
-            currentProgress.currentEnemyHealth -= stat.attackDmg;
+            let totalDamage = 0;
+
+            // Determine the damage based on which row the player finishes
+            switch (currentRow) {
+                case 0:  // Row 1: Execute (instant kill)
+                    totalDamage = currentProgress.currentEnemyHealth; // Set damage to enemy's full health to execute
+                    showDamageModal(`EXECUTED! You dealt ${totalDamage} damage to the enemy!`);
+                    break;
+                case 1:  // Row 2: 100 damage
+                    totalDamage = 100;
+                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                    break;
+                case 2:  // Row 3: 80 damage
+                    totalDamage = 80;
+                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                    break;
+                case 3:  // Row 4: 70 damage
+                    totalDamage = 70;
+                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                    break;
+                case 4:  // Row 5: 60 damage
+                    totalDamage = 60;
+                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                    break;
+                case 5:  // Row 6: 50 damage
+                    totalDamage = 50;
+                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                    break;
+                default:
+                    totalDamage = 50; // Default base damage if something goes wrong
+                    break;
+            }
+
+            // Apply the damage
+            currentProgress.currentEnemyHealth -= totalDamage;
             updateHealthBar();
             console.log(`Enemy health: ${currentProgress.currentEnemyHealth}`);
-
-            showDamageModal(`You have deal ${stat.attackDmg} to enemy`);
 
             if (currentProgress.currentEnemyHealth <= 0) {
                 currentProgress.currentEnemy++;
@@ -92,8 +124,6 @@ function checkGuess() {
             }
 
             setTimeout(() => {
-                //alert(`You have deal ${stat.attackDmg} damage to dinosaur`);
-                //showDamageModal();
                 achievement.wins += 1;
                 localStorage.setItem('achievement', JSON.stringify(achievement));
                 testShowstat();
@@ -104,16 +134,13 @@ function checkGuess() {
             currentRow++;
             currentCol = 0;
         } else {
-            //alert("Game Over! The word was: " + wordAnswer);
-            
             currentProgress.remainingLives -= 1;
-            showDamageModal(`You have lost 1 live!`);
+            showDamageModal(`You have lost 1 life!`);
             updateHearts();
             testShowstat();
             if (currentProgress.remainingLives > 0) {
                 resetGame();
             } else {
-                //alert("You've lost all lives. Progress is reset.");zzz
                 showDamageModal(`You've lost all lives. Progress is reset!`);
                 resetCurrentProgress();
                 resetGame();
@@ -349,7 +376,7 @@ function showDamageModal(message) {
 
     setTimeout(() => {
         damageModal.style.display = 'none'; // Hide the modal after 1 second
-    }, 1000); // 1 second = 1000 milliseconds
+    }, 1500); // 1 second = 1000 milliseconds
 }
 
 document.addEventListener('DOMContentLoaded', () => {

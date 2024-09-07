@@ -79,40 +79,57 @@ function checkGuess() {
 
             // Determine the damage based on which row the player finishes
             switch (currentRow) {
-                case 0:  // Row 1: Execute (instant kill)
-                    totalDamage = currentProgress.currentEnemyHealth; // Set damage to enemy's full health to execute
-                    showDamageModal(`EXECUTED! You dealt ${totalDamage} damage to the enemy!`);
+                case 0:  
+                    totalDamage = currentProgress.currentEnemyHealth; // Execute (instant kill)
                     break;
-                case 1:  // Row 2: 100 damage
-                    totalDamage = 100;
-                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                case 1:  
+                    totalDamage = 100; // Row 2: 100 damage
                     break;
-                case 2:  // Row 3: 80 damage
-                    totalDamage = 80;
-                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                case 2:  
+                    totalDamage = 80; // Row 3: 80 damage
                     break;
-                case 3:  // Row 4: 70 damage
-                    totalDamage = 70;
-                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                case 3:  
+                    totalDamage = 70; // Row 4: 70 damage
                     break;
-                case 4:  // Row 5: 60 damage
-                    totalDamage = 60;
-                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                case 4:  
+                    totalDamage = 60; // Row 5: 60 damage
                     break;
-                case 5:  // Row 6: 50 damage
-                    totalDamage = 50;
-                    showDamageModal(`You dealt ${totalDamage} damage to the enemy!`);
+                case 5:  
+                    totalDamage = 50; // Row 6: 50 damage
                     break;
                 default:
-                    totalDamage = 50; // Default base damage if something goes wrong
+                    totalDamage = 50; // Base damage if something goes wrong
                     break;
             }
 
-            // Apply the damage
+            // Apply hint-based damage reduction
+            let damageReductionPercentage = 0;
+
+            switch (hintCount) {
+                case 1: 
+                    damageReductionPercentage = 0.10; // 10% reduction
+                    break;
+                case 2: 
+                    damageReductionPercentage = 0.20; // 20% reduction
+                    break;
+                case 3: 
+                    damageReductionPercentage = 0.30; // 30% reduction
+                    break;
+                case 4: 
+                    damageReductionPercentage = 0.50; // 50% reduction
+                    break;
+                case 5: 
+                    damageReductionPercentage = 0.90; // 90% reduction
+                    break;
+            }
+
+            // Calculate final damage with reduction applied
+            totalDamage = totalDamage * (1 - damageReductionPercentage);
             currentProgress.currentEnemyHealth -= totalDamage;
             updateHealthBar();
-            console.log(`Enemy health: ${currentProgress.currentEnemyHealth}`);
+            showDamageModal(`You dealt ${totalDamage.toFixed(2)} damage to the enemy after ${hintCount} hint(s)`);
 
+            // Enemy defeated logic
             if (currentProgress.currentEnemyHealth <= 0) {
                 currentProgress.currentEnemy++;
                 if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
@@ -182,13 +199,12 @@ const hintShowContainer = document.querySelector('.hintShowContainer');
 
 // Store positions that have already been hinted
 let hintedPositions = [];
+let hintCount = 0; // Track how many hints are used
 
-// Function to generate and append a hint, avoiding duplicates
+// Modify the generateHint function to count hints and apply damage reduction
 function generateHint() {
-    // Get the current word answer (already defined in your script)
     const word = wordAnswer.split(''); // Break the word into an array of letters
 
-    // Stop if all 6 hints have been generated (one for each character)
     if (hintedPositions.length >= 6) {
         return;  // Do nothing when all hints are already revealed
     }
@@ -196,7 +212,6 @@ function generateHint() {
     // Find unhinted positions
     const unhintedPositions = word.map((_, index) => index).filter(index => !hintedPositions.includes(index));
 
-    // If there are no unhinted positions left, stop the function
     if (unhintedPositions.length === 0) {
         return;
     }
@@ -216,6 +231,9 @@ function generateHint() {
     
     // Append the hint div to the hintShowContainer
     hintShowContainer.appendChild(hintDiv);
+
+    // Increment hint count and apply reduction
+    hintCount++;
 }
 
 // Add event listener to the hint button to append a hint on click
@@ -271,6 +289,7 @@ function resetGame() {
     // Reset the hints
     hintedPositions = []; // Clear the list of hinted positions
     hintShowContainer.textContent = ''; // Clear the displayed hints
+    hintCount = 0;
 
     currentRow = 0;
     currentCol = 0;

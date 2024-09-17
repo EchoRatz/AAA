@@ -3,79 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Framework/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="Style/Wdttraining.css">
-    <title>Wordle</title>
+    <link rel = "stylesheet" href = "Framework/css/bootstrap.min.css">
+    <link rel = "stylesheet" type = "text/css" href = "Style/Wdttraining.css">
+
+    <title>Wordle Training</title>
 </head>
 <body>
 
-    <!-- <div id="timer" class="timer">Time Elapsed: 00:00</div> -->
-    <button id = "playAudioButton">Play Audio</button>
-    <a href="index.html"><button class="backtoMenu">Back to Menu</button></a>
+    <div id="timer" class="timer">l</div>
 
-    <div id="keyboard-container">
-        <div class="keyboard-row" id="row1"></div>
-        <div class="keyboard-row" id="row2"></div>
-        <div class="keyboard-row" id="row3"></div>
-    </div>
+    <div class = "main-container">
 
-    <div class="lower-section">
-        <div class="wordle-grid">
-            <div class="wordle-row">
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
+        <div class = "upper-section">
+
+            <div class = "header">
+
+                <div class = "left-section">
+        
+                    <div class = "heart-container js-heart-container">
+                        
+                    </div>
+
+                </div>
+                
+                <div class = "middle-section">
+                    
+                </div>
+        
+                <div class = "right-section">
+                    <div id="stageIndicator" class="stage-indicator">Training mode</div>
+                </div>
+        
             </div>
 
-            <div class="wordle-row">
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
+            <div class = "main-character">
+                <img src = "Style/source/Yoda.png" alt = "main-character Image" class = "MC-image js-MC-image">
             </div>
 
-            <div class="wordle-row">
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
+            <div class = "Enemy">
+                <img src = "" alt = "Enemy Image" class = "Enemy-image js-enemy-image">
+                
+                <div class="health-bar-container">
+                    <div class="health-bar js-health-bar"></div>
+                </div>
             </div>
 
-            <div class="wordle-row">
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
+        </div>
+    
+    
+            
+        <div class = "lower-section">
+
+            <div id = "keyboard-container">
+                <div class="keyboard-row" id="row1"></div>
+                <div class="keyboard-row" id="row2"></div>
+                <div class="keyboard-row" id="row3"></div>
             </div>
 
-            <div class="wordle-row">
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
+            <div class = "wordle-grid">
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
+        
+                <div class = "wordle-row">
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                    <div class = "wordle-cell"></div>
+                </div>
             </div>
 
-            <div class="wordle-row">
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
-                <div class="wordle-cell"></div>
+
+            <div class = "hintBox">
+                <div class = "hintButtonContainer">
+                    <button type = "button" class = "btn btn-outline-dark hintButton">
+                        <img src="Style/source/bulb.png" alt="icon" style="width: 30px; height: 30px; margin-right: 8px; margin-top: -10px;">
+                        <h4 style="display: inline; margin: 0;">Hint</h4>
+                    </button>
+
+                    <button id="playAudioButton" class="Audio btn btn-outline-dark"><h4>Play Audio</h4></button>
+                </div>
+                    
+                <div class = "hintShowContainer">
+                    <p></p>
+                </div>
+                </div>
+            
+            </div>
+
+        <div id="showDamageModal" class="attackModal">
+            <div class="modal-content">
+                <h4 id = "damageValue">You have deal 50 damage to dinosaur</h4>
+
             </div>
         </div>
-    </div>
+        
+        <div id="pauseModal" class="modal">
+            <div class="modal-content">
+                <h2>Paused</h2>
+                <button id="continueGame" class="btn btn-primary">Continue</button>
+                <button id="returnToMenu" class="btn btn-light">Return to Menu</button>
+                <button id="saveGame" class="btn btn-light">Save</button>
+                <button id="resetStat" class="btn btn-light">Reset stat</button> 
+            </div>
+        </div>
 
-    <audio id = "GameMusic" src="./audio/Game.mp3"></audio>
-    <script src="./Script/dictionary.js"></script>
-    <script src="./Script/Wdtraining.js"></script>
-    <script src="./Script/mainSound.js"></script>
+    </div>
     
+    <audio id = "GameMusic" src = "./audio/Game.mp3"></audio>
+    
+    <div id="pause-message">Press ESC to pause</div>
+
+    <script src = "./Script/dictionary.js"></script>
+    <script src = "./Script/Main.js"></script>
+    <script src = "./Script/levels.js"></script>
+    <script src = "./Script/Wdtraining.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
           console.log('DOM content loaded'); // Check that DOM is fully loaded

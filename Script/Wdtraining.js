@@ -257,7 +257,7 @@ function saveProgress() {
 }
 
 // New function to save progress from sessionStorage to localStorage
-function saveProgressToLocalStorage() {
+/*function saveProgressToLocalStorage() {
     const progress = JSON.parse(sessionStorage.getItem('currentProgress'));
     if (progress) {
         localStorage.setItem('saveProgress', JSON.stringify(progress)); // Save using correct key
@@ -272,6 +272,7 @@ document.getElementById('saveGame').addEventListener('click', () => {
     alert(`progress have been saved`);
     saveProgressToLocalStorage(); // Save the current progress to localStorage
 });
+*/
 
 window.addEventListener('beforeunload', () => {
     saveProgress();
@@ -298,7 +299,7 @@ function resetGame() {
     loadLevelContent();
     updateHearts();
 }
-
+/*
 document.getElementById('resetStat').addEventListener('click', () => {
     stat.wins = 0;
     stat.lives = 3;
@@ -310,6 +311,7 @@ document.getElementById('resetStat').addEventListener('click', () => {
     testShowstat();
     togglePauseModal();
 });
+*/
 
 function testShowstat() {
     console.log(`Wins: ${achievement.wins}, Lives: ${currentProgress.remainingLives}`);

@@ -372,15 +372,18 @@ function togglePauseModal() {
 
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
+        onPauseGame();
         togglePauseModal();
     }
 });
 
 document.getElementById('continueGame').addEventListener('click', function() {
+    onResumeGame();
     togglePauseModal();
 });
 
 document.getElementById('returnToMenu').addEventListener('click', function() {
+    onQuitGame();
     sessionStorage.removeItem('currentProgress');
     sessionStorage.removeItem('sessionSave');
     window.location.href = "index.html";
@@ -398,6 +401,68 @@ function showDamageModal(message) {
     }, 1500); // 1 second = 1000 milliseconds
 }
 
+// Timer variables
+let timerInterval;
+let elapsedSeconds = 0;
+let isPaused = false;
+
+// Function to start the timer
+function startTimer() {
+    if (!timerInterval) {  // Start the timer only if it's not already running
+        timerInterval = setInterval(() => {
+            if (!isPaused) {
+                elapsedSeconds++;
+                updateTimerDisplay();
+            }
+        }, 1000);  // Update every second
+    }
+}
+
+// Function to update the timer display
+function updateTimerDisplay() {
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
+    document.getElementById('timer').textContent = `Time Elapsed: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Function to pause the timer
+function pauseTimer() {
+    isPaused = true;
+}
+
+// Function to resume the timer
+function resumeTimer() {
+    isPaused = false;
+}
+
+// Function to reset the timer
+function resetTimer() {
+    clearInterval(timerInterval);  // Stop the interval
+    timerInterval = null;  // Reset the interval ID
+    elapsedSeconds = 0;
+    updateTimerDisplay();  // Reset the display
+}
+
+// Call this function when the game starts
+function onGameStart() {
+    startTimer();
+}
+
+// Call this function when the pause modal is shown
+function onPauseGame() {
+    pauseTimer();
+}
+
+// Call this function when the pause modal is hidden
+function onResumeGame() {
+    resumeTimer();
+}
+
+// Call this function when the game is quit
+function onQuitGame() {
+    resetTimer();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Check if there's saved progress in sessionStorage
     if (sessionStorage.getItem('currentProgress')) {
@@ -407,6 +472,9 @@ document.addEventListener('DOMContentLoaded', () => {
         resetCurrentProgress(); // Start fresh if no progress exists in sessionStorage
         console.log('Starting new game with fresh progress.');
     }
+
+    onGameStart();
+
     // Load level content and hearts
     loadLevelContent(); 
     updateStageIndicator();

@@ -63,6 +63,26 @@ function updateStageIndicator() {
     stageIndicator.textContent = `Stage: ${currentProgress.currentLevel}-${currentProgress.currentEnemy}`;
 }
 
+// Function to update the keyboard keys based on the result
+function updateKeyboardState(letter, state) {
+    // Get all keyboard buttons
+    const keyButtons = document.querySelectorAll('.key-button');
+    keyButtons.forEach(button => {
+        if (button.textContent.toLowerCase() === letter.toLowerCase()) {
+            // Update the button's state only if it's a stronger state than the previous one
+            if (state === 'state-3') {
+                button.classList.remove('state-1', 'state-2');
+                button.classList.add('state-3'); // Correct letter, correct position
+            } else if (state === 'state-2' && !button.classList.contains('state-3')) {
+                button.classList.remove('state-1');
+                button.classList.add('state-2'); // Correct letter, wrong position
+            } else if (state === 'state-1' && !button.classList.contains('state-2') && !button.classList.contains('state-3')) {
+                button.classList.add('state-1'); // Wrong letter
+            }
+        }
+    });
+}
+
 function checkGuess() {
     const row = grid.children[currentRow];
     let guessedWord = '';
@@ -75,66 +95,63 @@ function checkGuess() {
 
     Promise.all(flipPromises).then(() => {
         if (guessedWord === wordAnswer) {
+            // If the guess is correct, handle victory logic
             let totalDamage = 0;
 
-            // Determine the damage based on which row the player finishes
             switch (currentRow) {
-                case 0:  
-                    totalDamage = currentProgress.currentEnemyHealth; // Execute (instant kill)
+                case 0:
+                    totalDamage = currentProgress.currentEnemyHealth; // Instant kill
                     break;
-                case 1:  
-                    totalDamage = 100; // Row 2: 100 damage
+                case 1:
+                    totalDamage = 100;
                     break;
-                case 2:  
-                    totalDamage = 80; // Row 3: 80 damage
+                case 2:
+                    totalDamage = 80;
                     break;
-                case 3:  
-                    totalDamage = 70; // Row 4: 70 damage
+                case 3:
+                    totalDamage = 70;
                     break;
-                case 4:  
-                    totalDamage = 60; // Row 5: 60 damage
+                case 4:
+                    totalDamage = 60;
                     break;
-                case 5:  
-                    totalDamage = 50; // Row 6: 50 damage
+                case 5:
+                    totalDamage = 50;
                     break;
                 default:
-                    totalDamage = 50; // Base damage if something goes wrong
+                    totalDamage = 50; // Base damage
                     break;
             }
 
-            // Apply hint-based damage reduction
             let damageReductionPercentage = 0;
 
             switch (hintCount) {
-                case 1: 
-                    damageReductionPercentage = 0.10; // 10% reduction
+                case 1:
+                    damageReductionPercentage = 0.10;
                     break;
-                case 2: 
-                    damageReductionPercentage = 0.20; // 20% reduction
+                case 2:
+                    damageReductionPercentage = 0.20;
                     break;
-                case 3: 
-                    damageReductionPercentage = 0.30; // 30% reduction
+                case 3:
+                    damageReductionPercentage = 0.30;
                     break;
-                case 4: 
-                    damageReductionPercentage = 0.50; // 50% reduction
+                case 4:
+                    damageReductionPercentage = 0.50;
                     break;
-                case 5: 
-                    damageReductionPercentage = 0.90; // 90% reduction
+                case 5:
+                    damageReductionPercentage = 0.90;
                     break;
             }
 
-            // Calculate final damage with reduction applied
             totalDamage = totalDamage * (1 - damageReductionPercentage);
             currentProgress.currentEnemyHealth -= totalDamage;
             updateHealthBar();
             showDamageModal(`You dealt ${totalDamage.toFixed(2)} damage to the enemy after ${hintCount} hint(s)`);
 
-            // Enemy defeated logic
             if (currentProgress.currentEnemyHealth <= 0) {
                 currentProgress.currentEnemy++;
                 if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
                     currentProgress.currentLevel++;
-                    currentProgress.currentEnemy = 1; 
+                    currentProgress.currentEnemy = 1;
                 }
                 updateStageIndicator();
                 loadLevelContent();
@@ -147,22 +164,44 @@ function checkGuess() {
                 resetGame();
                 saveProgress();
             }, 300);
-        } else if (currentRow < 5) {
-            currentRow++;
-            currentCol = 0;
         } else {
-            currentProgress.remainingLives -= 1;
-            showDamageModal(`You have lost 1 life!`);
-            updateHearts();
-            testShowstat();
-            if (currentProgress.remainingLives > 0) {
-                resetGame();
-            } else {
-                showDamageModal(`You've lost all lives. Progress is reset!`);
-                resetCurrentProgress();
-                resetGame();
+            // Evaluate and update the keyboard for each letter in the guess
+            for (let i = 0; i < 5; i++) {
+                const guessedLetter = guessedWord[i];
+                const correctLetter = wordAnswer[i];
+
+                if (guessedLetter === correctLetter) {
+                    // Letter is in the correct position
+                    row.children[i].style.backgroundColor = '#538d4e'; // Set cell to green
+                    updateKeyboardState(guessedLetter, 'state-3'); // Update keyboard to green
+                } else if (wordAnswer.includes(guessedLetter)) {
+                    // Letter exists in the word but is in the wrong position
+                    row.children[i].style.backgroundColor = '#b59f3b'; // Set cell to yellow
+                    updateKeyboardState(guessedLetter, 'state-2'); // Update keyboard to yellow
+                } else {
+                    // Letter is not in the word
+                    row.children[i].style.backgroundColor = 'gray'; // Set cell to gray
+                    updateKeyboardState(guessedLetter, 'state-1'); // Update keyboard to red
+                }
             }
-            saveProgress();
+
+            if (currentRow < 5) {
+                currentRow++;
+                currentCol = 0;
+            } else {
+                currentProgress.remainingLives -= 1;
+                showDamageModal(`You have lost 1 life!`);
+                updateHearts();
+                testShowstat();
+                if (currentProgress.remainingLives > 0) {
+                    resetGame();
+                } else {
+                    showDamageModal(`You've lost all lives. Progress is reset!`);
+                    resetCurrentProgress();
+                    resetGame();
+                }
+                saveProgress();
+            }
         }
     });
 }
@@ -277,6 +316,14 @@ window.addEventListener('beforeunload', () => {
     saveProgress();
 });
 
+function resetKeyboardState() {
+    const keyButtons = document.querySelectorAll('.key-button');
+    keyButtons.forEach(button => {
+        button.classList.remove('state-1', 'state-2', 'state-3'); // Remove all state classes
+    });
+}
+
+
 function resetGame() {
     for (let i = 0; i < grid.children.length; i++) {
         const row = grid.children[i];
@@ -290,6 +337,8 @@ function resetGame() {
     hintedPositions = []; // Clear the list of hinted positions
     hintShowContainer.textContent = ''; // Clear the displayed hints
     hintCount = 0;
+
+    resetKeyboardState();
 
     currentRow = 0;
     currentCol = 0;
@@ -468,6 +517,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('currentProgress')) {
         currentProgress = JSON.parse(sessionStorage.getItem('currentProgress'));
         console.log('Loaded progress from sessionStorage:', currentProgress);
+
+        updateHealthBar();
     } else {
         resetCurrentProgress(); // Start fresh if no progress exists in sessionStorage
         console.log('Starting new game with fresh progress.');

@@ -41,7 +41,7 @@ body{
     z-index: -1; /* Move the glass box behind the buttons */
 }
 
-.playButton, .howToPlayButton, .LoadButton, .trainingModeButton{
+.playButton, .howToPlayButton, .LoadButton, .trainingModeButton, #playAudioButton{
     height: 100px;
     width: 200px;
     font-size: 25px;

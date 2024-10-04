@@ -148,13 +148,16 @@ function checkGuess() {
             showDamageModal(`You dealt ${totalDamage.toFixed(2)} damage to the enemy after ${hintCount} hint(s)`);
 
             if (currentProgress.currentEnemyHealth <= 0) {
-                currentProgress.currentEnemy++;
+                currentProgress.currentEnemy++; // Move to next enemy
+                checkIfLastEnemyDefeated(); // Check if the last enemy (2-4) is defeated
+    
                 if (currentProgress.currentEnemy > levels[currentProgress.currentLevel - 1].enemies.length) {
                     currentProgress.currentLevel++;
-                    currentProgress.currentEnemy = 1;
+                    currentProgress.currentEnemy = 1; // Reset enemy count for the next level
                 }
-                updateStageIndicator();
-                loadLevelContent();
+    
+                updateStageIndicator(); // Update UI to reflect new stage/enemy
+                loadLevelContent(); // Load new enemy and health
             }
 
             setTimeout(() => {
@@ -511,6 +514,24 @@ function onResumeGame() {
 function onQuitGame() {
     resetTimer();
 }
+
+function showEndGameModal() {
+    const endGameModal = document.getElementById('endGameModal');
+    endGameModal.style.display = 'flex'; // Show the end game modal
+}
+
+function checkIfLastEnemyDefeated() {
+    // Check if we are in Stage 2 and have defeated Enemy 4 (2-4)
+    if (currentProgress.currentLevel === 2 && currentProgress.currentEnemy === 5) {
+        showEndGameModal(); // Show the end game modal when Enemy 2-4 is defeated
+    }
+}
+
+document.getElementById('returnToMenuFromEnd').addEventListener('click', function() {
+    sessionStorage.removeItem('currentProgress'); // Clear progress
+    window.location.href = "index.html"; // Redirect to the menu page
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check if there's saved progress in sessionStorage

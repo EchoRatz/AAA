@@ -436,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
             button.textContent = letter;
             button.classList.add('key-button');
             button.dataset.state = '0';
-            button.addEventListener('click', () => cycleButtonState(button));
             row.appendChild(button);
         });
     }

@@ -353,12 +353,12 @@ body, html {
   }
   
   .key-button.state-2 {
-    background-color: #ffff99; /* Light Yellow */
+    background-color: #e9e94c; /* Light Yellow */
     color: #000000;
   }
   
   .key-button.state-3 {
-    background-color: #90ee90; /* Light Green */
+    background-color: #5ee75e; /* Light Green */
     color: #000000;
   }
 

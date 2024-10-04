@@ -1,12 +1,12 @@
 const dialogues = [
   {
     text: "Oh no, it's 3p.m already and I haven't fed the dinosaur yet, they must be very hungry by now.",
-    portrait: "./Style/source/Doc.jpg",
+    portrait: "./Style/source/CutsceneMC.png",
     name: "Doc" 
   },
   { 
     text: "Let's grab a bucket of meat and feed them now.", 
-    portrait: "./Style/source/Doc.jpg", 
+    portrait: "./Style/source/CutsceneMC.png", 
     name: "Doc" 
   },
   { 
@@ -21,7 +21,7 @@ const dialogues = [
   },
   { 
     text: "AAAAHHHH Why are you so aggressive today!", 
-    portrait: "./Style/source/Doc.jpg", 
+    portrait: "./Style/source/CutsceneMC.png", 
     name: "Doc" 
   }
 ];

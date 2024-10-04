@@ -378,3 +378,24 @@ body, html {
     margin-top: 10px;
     text-align: center;
   }
+
+@keyframes stretch {
+    0% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+    }
+    50% {
+        transform: scaleY(1.05); /* Stretch 20% vertically */
+        transform-origin: bottom;
+    }
+    100% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+    }
+}
+
+.MC-image, .Enemy-image {
+    animation: stretch 3s ease-in-out infinite;
+}
+
+

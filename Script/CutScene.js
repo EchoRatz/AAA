@@ -150,3 +150,7 @@ function triggerVibrateAnimation() {
     document.body.classList.remove('screen-vibrate');
   }, 500); 
 }
+
+function skipToWordle(){
+  window.location.href = 'wordle.html';
+}
